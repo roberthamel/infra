@@ -60,6 +60,8 @@ brew_apps=(
   "ncdu"
   "nmap"
   "node"
+  "operator-sdk"
+  "protobuf"
   "python@3.10"
   "ripgrep"
   "sqlite"
