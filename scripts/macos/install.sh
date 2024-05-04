@@ -74,11 +74,6 @@ brew_apps=(
   "yt-dlp"
   "yq"
   "zsh"
-  "zsh-autosuggestions"
-  "zsh-syntax-highlighting"
-  "zsh-fast-syntax-highlighting"
-  "zsh-autocomplete"
-  "zsh-autopair"
 )
 
 main() {
