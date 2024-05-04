@@ -190,12 +190,6 @@ main() {
     touch $file_marker
   fi
 
-  echo "::: Refresh zsh"
-  if $did_install_dotfiles; then
-    source $HOME/.zshrc
-    echo "✅ Refreshed zsh"
-  fi
-
   echo "::: directories"
   set -x
   mkdir -p $HOME/workspace
