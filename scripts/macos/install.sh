@@ -91,7 +91,7 @@ main() {
     echo "Skipping Homebrew installation"
   fi
 
-  echo "::: Tap homebrew/cask-fonts"
+  echo "::: Fonts"
   if ! brew tap | grep -q 'homebrew/cask-fonts' > /dev/null; then
     brew tap homebrew/cask-fonts > /dev/null
     echo "✅ Tapped homebrew/cask-fonts"
