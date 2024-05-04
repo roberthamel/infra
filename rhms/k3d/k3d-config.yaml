@@ -1,0 +1,26 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: rhms
+servers: 1
+ports:
+  - port: 10000-11000:10000-11000
+    nodeFilters:
+      - loadbalancer
+volumes:
+  - volume: /Users/rh/srv/k3s:/srv/k3s
+registries:
+  config: |
+    mirrors:
+      "git.rhcloud.dev":
+        endpoint:
+          - "https://git.rhcloud.dev"
+options:
+  k3d:
+    wait: true
+  k3s:
+    extraArgs:
+      - arg: "--disable=traefik"
+        nodeFilters:
+          - server:*
+
