@@ -7,7 +7,7 @@ install:
 	cp com.$(USER).multissh.plist $(HOME)/Library/LaunchAgents
 	chmod 644 ~/Library/LaunchAgents/com.$(USER).multissh.plist
 
-load: install
+load:
 	launchctl load $(HOME)/Library/LaunchAgents/com.$(USER).multissh.plist
 
 lint:
@@ -25,3 +25,8 @@ destroy:
 
 run:
 	./multissh
+
+relaunch: destroy  wait install wait load
+
+wait:
+	sleep 2
