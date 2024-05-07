@@ -4,6 +4,8 @@ set -eEo pipefail
 dofiles_repo=https://github.com/roberthamel/dotfiles-macos.git
 file_marker="$HOME/.local/macos-configured"
 
+
+
 mas_apps=(
   "Display Menu"
   "Draw Things: AI Generation"
@@ -77,44 +79,67 @@ brew_apps=(
 )
 
 main() {
+
   did_install_dotfiles=false
+
   echo "::: Homebrew"
   if ! command -v brew &> /dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null
+    brew install mas
     echo "✅ Installed Homebrew"
   else
     echo "Skipping Homebrew installation"
   fi
 
-  echo "::: Fonts"
-  if ! brew tap | grep -q 'homebrew/cask-fonts' > /dev/null; then
-    brew tap homebrew/cask-fonts > /dev/null
-    echo "✅ Tapped homebrew/cask-fonts"
-    brew install homebrew/cask-fonts/font-meslo-lg-nerd-font > /dev/null
-  else
-    echo "Skipping homebrew/cask-fonts tap"
-  fi
-  # brew install homebrew/cask-fonts/font-meslo-lg-nerd-font
+  echo "::: Create Brewfile"
+  cat <<EOF > $HOME/.Brewfile
+brew "zsh"
+brew "bash"
+brew "bat"
+brew "chezmoi"
+brew "cloudflared"
+brew "ctop"
+brew "devcontainer"
+brew "direnv"
+brew "fzf"
+brew "git-crypt"
+brew "git-lfs"
+brew "git"
+brew "jq"
+brew "k9s"
+brew "kubectx"
+brew "kubernetes-cli"
+brew "lsd"
+brew "mkcert"
+brew "ncdu"
+brew "nmap"
+brew "ripgrep"
+brew "sqlite"
+brew "tea"
+brew "tmux"
+brew "tree"
+brew "watch"
+brew "wget"
+brew "yq"
 
-  echo "::: Homebrew casks"
-  for app in "${cask_apps[@]}"; do
-    if ! brew list --casks --versions "$app" > /dev/null; then
-      brew install --force --cask "$app" > /dev/null
-      echo "✅ Installed $app"
-    else
-      echo "Skipping $app installation"
-    fi
-  done
+cask "1password"
+cask "1password-cli"
+cask "alfred"
+cask "balenaetcher"
+cask "docker"
+cask "iterm2"
+cask "obsidian"
+cask "rectangle"
+cask "the-unarchiver"
+cask "visual-studio-code"
 
-  echo "::: Homebrew packages"
-  for app in "${brew_apps[@]}"; do
-    if ! brew list --versions "$app" > /dev/null; then
-      brew install --force --overwrite "$app" > /dev/null
-      echo "✅ Installed $app"
-    else
-      echo "Skipping $app installation"
-    fi
-  done
+mas "Display Menu", id: 549_083_868
+mas "Draw Things: AI Generation", id: 6_444_050_820
+mas "PopClip", id: 445_189_367
+mas "SnippetsLab", id: 1_006_087_419
+mas "SSH Config Editor", id: 1_109_319_285
+mas "Tailscale", id: 1_475_387_142
+EOF
 
   echo "::: rust"
   if ! command -v rustc &> /dev/null; then
@@ -142,15 +167,15 @@ main() {
     echo "Skipping dotfiles configuration"
   fi
 
-  echo "::: App Store apps"
-  for app in "${mas_apps[@]}"; do
-    if ! mas list | grep -q "$app"; then
-      mas lucky "$app" > /dev/null
-      echo "✅ Installed $app"
-    else
-      echo "Skipping $app installation"
+  echo "::: Install from Brewfile"
+  pushd $HOME > /dev/null
+    if ! command -v mas &> /dev/null; then
+      echo "Installing mas"
+      brew install mas
     fi
-  done
+    brew bundle --global --no-lock --force
+
+  popd > /dev/null
 
   echo "::: MacOS"
   if [ ! -d "$file_marker" ]; then
@@ -188,9 +213,8 @@ main() {
   fi
 
   echo "::: directories"
-  set -x
   mkdir -p $HOME/workspace
-  set +x > /dev/null
+  echo "✅ Created directories"
 }
 start_time=$(date +%s)
 main
