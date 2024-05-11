@@ -1,16 +1,9 @@
 {
   "packages": [
-    "terraform@1.6.4",
     "packer@1.9.4",
-
-    
-    "yarn@latest",
-    "pulumictl@latest",
-    "go@1.21.",
-    "nodejs@20.",
-    "python3@3.11.8",
-    "dotnet-sdk@6.0.",
-    "gradle_7@7.6"
+    "moreutils@0.67",
+    "jq@latest",
+    "terraform@latest"
   ],
   "shell": {
     "init_hook": [
