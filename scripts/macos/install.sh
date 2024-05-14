@@ -4,82 +4,7 @@ set -eEo pipefail
 dofiles_repo=https://github.com/roberthamel/dotfiles-macos.git
 file_marker="$HOME/.local/macos-configured"
 
-
-
-mas_apps=(
-  "Display Menu"
-  "Draw Things: AI Generation"
-  "PopClip"
-  "SnippetsLab"
-  "SSH Config Editor"
-  "Tailscale"
-)
-
-cask_apps=(
-  "1password"
-  "1password-cli"
-  "alfred"
-  "balenaetcher"
-  "docker"
-  "iterm2"
-  "obsidian"
-  "rectangle"
-  "the-unarchiver"
-  "visual-studio-code"
-)
-
-brew_apps=(
-  "ansible"
-  "argocd"
-  "bash"
-  "bandcamp-dl"
-  "bat"
-  "buf"
-  "bun"
-  "chezmoi"
-  "cloudflared"
-  "ctop"
-  "deno"
-  "devcontainer"
-  "direnv"
-  "ffmpeg"
-  "fzf"
-  "gh"
-  "git-crypt"
-  "git-lfs"
-  "git"
-  "go"
-  "helm"
-  "htop"
-  "jq"
-  "k3d"
-  "k9s"
-  "kubectx"
-  "kubernetes-cli"
-  "lsd"
-  "mas"
-  "mkcert"
-  "ncdu"
-  "nmap"
-  "node"
-  "operator-sdk"
-  "protobuf"
-  "python@3.10"
-  "ripgrep"
-  "sqlite"
-  "starship"
-  "tea"
-  "tmux"
-  "tree"
-  "watch"
-  "wget"
-  "yt-dlp"
-  "yq"
-  "zsh"
-)
-
 main() {
-
   did_install_dotfiles=false
 
   echo "::: Homebrew"
@@ -141,12 +66,12 @@ mas "SSH Config Editor", id: 1_109_319_285
 mas "Tailscale", id: 1_475_387_142
 EOF
 
-  echo "::: rust"
-  if ! command -v rustc &> /dev/null; then
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y > /dev/null
-    echo "✅ Installed rust"
+  echo "::: devbox"
+  if ! command -v devbox &> /dev/null; then
+    curl -fsSL https://get.jetify.com/devbox | bash
+    echo "✅ Installed devbox"
   else
-    echo "Skipping rust installation"
+    echo "Skipping devbox installation"
   fi
 
   echo "::: oh-my-zsh"
@@ -160,7 +85,7 @@ EOF
 
   echo "::: dotfiles"
   if [ ! -d "$HOME/.local/share/chezmoi" ]; then
-    chezmoi init --apply $dotfiles_repo > /dev/null
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply $dotfiles_repo
     did_install_dotfiles=true
     echo "✅ Configured dotfiles"
   else
