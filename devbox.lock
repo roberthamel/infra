@@ -1,6 +1,70 @@
 {
   "lockfile_version": "1",
   "packages": {
+    "ansible@latest": {
+      "last_modified": "2024-05-03T15:42:32Z",
+      "resolved": "github:NixOS/nixpkgs/5fd8536a9a5932d4ae8de52b7dc08d92041237fc#ansible",
+      "source": "devbox-search",
+      "version": "2.16.5",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/p3m0fdg7k0y69x5bkz2ldw7lg93cab82-python3.11-ansible-core-2.16.5",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/fi0r8npifanw5r83w72prxlsrbfd6jrh-python3.11-ansible-core-2.16.5-dist"
+            }
+          ],
+          "store_path": "/nix/store/p3m0fdg7k0y69x5bkz2ldw7lg93cab82-python3.11-ansible-core-2.16.5"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/r1s2h8rsdn62l1smkbx4gy9iydz8jbnq-python3.11-ansible-core-2.16.5",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/gvi0rivs49rjyrr3zprvzr1cdi0pr03s-python3.11-ansible-core-2.16.5-dist"
+            }
+          ],
+          "store_path": "/nix/store/r1s2h8rsdn62l1smkbx4gy9iydz8jbnq-python3.11-ansible-core-2.16.5"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/ws363jazmbhcghjdr63fxlmrlfrgy2an-python3.11-ansible-core-2.16.5",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/plm1y97jx5gxcbxcxngniyvgl5chp0az-python3.11-ansible-core-2.16.5-dist"
+            }
+          ],
+          "store_path": "/nix/store/ws363jazmbhcghjdr63fxlmrlfrgy2an-python3.11-ansible-core-2.16.5"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/pzfspr5w3ii79apxq26xx4pcj5jv765l-python3.11-ansible-core-2.16.5",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/3xiyraqh19x1zrvi7w1fhksq3mqn9nyi-python3.11-ansible-core-2.16.5-dist"
+            }
+          ],
+          "store_path": "/nix/store/pzfspr5w3ii79apxq26xx4pcj5jv765l-python3.11-ansible-core-2.16.5"
+        }
+      }
+    },
     "jq@latest": {
       "last_modified": "2024-04-28T10:22:29-04:00",
       "resolved": "github:NixOS/nixpkgs/cf8cc1201be8bc71b7cbbbdaf349b22f4f99c7ae#jq",
@@ -178,54 +242,6 @@
             }
           ],
           "store_path": "/nix/store/hagxcm328f3y0ahqqc2b6mqca099m57b-moreutils-0.67"
-        }
-      }
-    },
-    "packer@1.9.4": {
-      "last_modified": "2023-11-17T09:14:56-05:00",
-      "resolved": "github:NixOS/nixpkgs/a71323f68d4377d12c04a5410e214495ec598d4c#packer",
-      "source": "devbox-search",
-      "version": "1.9.4",
-      "systems": {
-        "aarch64-darwin": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/g1b19cns25y4ypwd2fi8ghdy2d5jk0n6-packer-1.9.4",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/g1b19cns25y4ypwd2fi8ghdy2d5jk0n6-packer-1.9.4"
-        },
-        "aarch64-linux": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/50xq2ych2ciixknppczbi7nsimqkkj6p-packer-1.9.4",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/50xq2ych2ciixknppczbi7nsimqkkj6p-packer-1.9.4"
-        },
-        "x86_64-darwin": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/p5074a43rvl8cl094v5laxx1bwfnj5j5-packer-1.9.4",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/p5074a43rvl8cl094v5laxx1bwfnj5j5-packer-1.9.4"
-        },
-        "x86_64-linux": {
-          "outputs": [
-            {
-              "name": "out",
-              "path": "/nix/store/18zjkk36212rn0g90h9a08ymi6ix45wc-packer-1.9.4",
-              "default": true
-            }
-          ],
-          "store_path": "/nix/store/18zjkk36212rn0g90h9a08ymi6ix45wc-packer-1.9.4"
         }
       }
     },

@@ -1,9 +1,9 @@
 {
   "packages": [
-    "packer@1.9.4",
     "moreutils@0.67",
     "jq@latest",
-    "terraform@latest"
+    "terraform@latest",
+    "ansible@latest"
   ],
   "shell": {
     "init_hook": [
