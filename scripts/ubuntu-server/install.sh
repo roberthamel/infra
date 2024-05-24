@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+start_time=$(date +%s)
+
 _log() {
   local msg="${1}"
   echo -e "🟢 \033[1;33m${msg}\033[0m"
@@ -26,6 +28,7 @@ install_omz() {
     # https://github.com/ohmyzsh/ohmyzsh#unattended-install
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     cat <<EOF >~/.zshrc
+export SHELL=/usr/bin/zsh
 export ZSH="\$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(docker direnv git git-commit gitignore wd)
@@ -52,7 +55,6 @@ maybe_install_docker() {
       curl -fsSL https://get.docker.com | sudo sh
       _log "Adding user to docker group"
       sudo usermod -aG docker $USER
-      newgrp docker
     else
       _log "docker already installed"
     fi
@@ -89,18 +91,20 @@ maybe_install_k3s() {
 # Function to check if a file was modified in the last 24 hours or doesn't exist
 _should_download_image() {
   local file="$1"
+  echo "file=$file"
   # If file doesn't exist, return true (i.e., should download)
   [[ ! -f "$file" ]] && return 0
   local current_time=$(date +%s)
   local file_mod_time=$(stat --format="%Y" "$file")
   local difference=$((current_time - file_mod_time))
   # If older than 24 hours, return true
+  echo "difference=(($difference >= 86400))"
   ((difference >= 86400))
 }
 
 maybe_create_proxmox_template() {
   if [[ $is_root == true ]]; then
-    VM_ID=9100
+    VM_ID=100
     UBUNTU_VERSION="noble"
     IMAGE_PATH_DIRNAME="/root/cloud-images"
     mkdir -p "${IMAGE_PATH_DIRNAME}"
@@ -110,9 +114,11 @@ maybe_create_proxmox_template() {
 
     # Download the disk image if it doesn't exist or if it was modified more than 24 hours ago
     _log "Checking if disk image needs to be downloaded..."
-    if $(_should_download_image "${ABSOLUTE_IMAGE_PATH}"); then
+    if [[ ! -f "${ABSOLUTE_IMAGE_PATH}" ]]; then
       rm -f "${ABSOLUTE_IMAGE_PATH}"
       wget -O ${ABSOLUTE_IMAGE_PATH} ${IMAGE_URL}
+    else
+      _log "Disk image already exists"
     fi
 
     _log "Creating authorized_keys file..."
@@ -144,9 +150,7 @@ maybe_create_proxmox_template() {
     qm set $VM_ID --boot c --bootdisk scsi0
     qm set $VM_ID --ide2 local-lvm:cloudinit
     qm set $VM_ID --autostart 1
-
-    _log "Resizing disk..."
-    qm resize $VM_ID scsi0 +32G
+    qm set $VM_ID --onboot 1
 
     _log "Creating VM template..."
     qm template $VM_ID
@@ -163,8 +167,6 @@ main() {
   maybe_install_k3s
   maybe_create_proxmox_template
 }
-
-start_time=$(date +%s)
 main
 end_time=$(date +%s)
 elapsed_time=$(($end_time - $start_time))
@@ -172,3 +174,4 @@ minutes=$(($elapsed_time / 60))
 seconds=$(($elapsed_time % 60))
 echo "Elapsed time: $minutes minute(s) $seconds second(s)"
 echo "exit $?"
+newgrp docker
