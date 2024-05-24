@@ -75,7 +75,7 @@ install_apt() {
 maybe_install_k3s() {
   _log "is_root=$is_root"
   _log "was_installed=$(test -f ~/.k3s_installed)"
-  if [[ ! $is_root && ! -f ~/.k3s_installed  ]]; then
+  if [[ $is_root == false && ! -f ~/.k3s_installed  ]]; then
     _log "Installing k3s"
     curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode=644 --docker --disable=traefik
     touch ~/.k3s_installed
