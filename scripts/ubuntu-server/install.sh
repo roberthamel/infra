@@ -57,9 +57,9 @@ install_apt() {
     _log "is_root: $is_root"
     local maybe_sudo=""
     if [[ $is_root == false ]]; then
-      sudo apt update && sudo apt install -y tailscale curl git zsh vim direnv qemu-guest-agent
+      sudo apt update && sudo apt install -y curl git zsh vim direnv qemu-guest-agent
     else
-      apt update && sudo apt install -y tailscale curl git zsh vim direnv
+      apt update && sudo apt install -y curl git zsh vim direnv
     fi
     touch ~/.apt_installed
   fi
@@ -139,7 +139,7 @@ maybe_create_proxmox_template() {
 main() {
   install_apt
   install_docker
-  # install_tailscale
+  install_tailscale
   install_omz
   maybe_install_k3s
   maybe_create_proxmox_template
