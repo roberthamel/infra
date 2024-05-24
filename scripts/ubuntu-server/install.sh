@@ -9,14 +9,16 @@ _log() {
 export is_root=false
 if [[ $EUID == 0 ]]; then
   is_root=true
-  _log "Detected root user and assuming proxmox environment"
-  _log "Checking environment variables..."
-  set +u
-  vm_password=${PROXMOX_USER_PASSWORD:?PROXMOX_USER_PASSWORD must be set}
-  pk=${PROXMOX_PUBLIC_KEY:?PROXMOX_PUBLIC_KEY must be set}
-  set -u
+  _log "Detected root user... assuming proxmox environment"
+  _log "Checking environment variables"
+  echo -n "Please enter your PROXMOX_USER_PASSWORD: "
+  read -s vm_password
+  echo
+  echo -n "Please enter your PROXMOX_PUBLIC_KEY: "
+  read pk
+  echo
 else
-  _log "Detected non-root user and assuming vm environment"
+  _log "Detected non-root user... assuming vm environment"
 fi
 
 install_omz() {
@@ -96,7 +98,7 @@ _should_download_image() {
 
 maybe_create_proxmox_template() {
   if [[ $is_root == true ]]; then
-    VM_ID=9000
+    VM_ID=9100
     UBUNTU_VERSION="noble"
     IMAGE_PATH_DIRNAME="/root/cloud-images"
     mkdir -p "${IMAGE_PATH_DIRNAME}"
