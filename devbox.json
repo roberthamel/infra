@@ -2,7 +2,6 @@
   "packages": [
     "moreutils@0.67",
     "jq@latest",
-    "terraform@latest",
     "ansible@latest"
   ],
   "shell": {
