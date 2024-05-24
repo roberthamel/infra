@@ -46,16 +46,18 @@ install_tailscale() {
   fi
 }
 
-install_docker() {
-  if ! command -v docker &>/dev/null; then
-    curl -fsSL https://get.docker.com | sudo sh
-    if [[ $is_root == false ]]; then
+maybe_install_docker() {
+  if [[ $is_root == false ]]; then
+    if ! command -v docker &>/dev/null; then
+      curl -fsSL https://get.docker.com | sudo sh
       _log "Adding user to docker group"
       sudo usermod -aG docker $USER
       newgrp docker
+    else
+      _log "docker already installed"
     fi
   else
-    _log "docker already installed"
+    _log "Skipping docker installation"
   fi
 }
 
@@ -108,7 +110,7 @@ maybe_create_proxmox_template() {
 
     # Download the disk image if it doesn't exist or if it was modified more than 24 hours ago
     _log "Checking if disk image needs to be downloaded..."
-    if _should_download_image "${DISK_IMAGE}"; then
+    if $(_should_download_image "${ABSOLUTE_IMAGE_PATH}"); then
       rm -f "${ABSOLUTE_IMAGE_PATH}"
       wget -O ${ABSOLUTE_IMAGE_PATH} ${IMAGE_URL}
     fi
@@ -138,10 +140,13 @@ maybe_create_proxmox_template() {
     qm importdisk $VM_ID $ABSOLUTE_IMAGE_PATH local-lvm
 
     _log "Setting VM properties..."
-    qm set $VM_ID --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-$VM_ID-disk-0,size=36352M,ssd=1
+    qm set $VM_ID --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-$VM_ID-disk-0,size=32768M,ssd=1
     qm set $VM_ID --boot c --bootdisk scsi0
     qm set $VM_ID --ide2 local-lvm:cloudinit
     qm set $VM_ID --autostart 1
+
+    _log "Resizing disk..."
+    qm resize $VM_ID scsi0 +32G
 
     _log "Creating VM template..."
     qm template $VM_ID
@@ -152,9 +157,9 @@ maybe_create_proxmox_template() {
 
 main() {
   install_apt
-  install_docker
   install_tailscale
   install_omz
+  maybe_install_docker
   maybe_install_k3s
   maybe_create_proxmox_template
 }
