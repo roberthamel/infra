@@ -30,6 +30,8 @@ plugins=(docker direnv git git-commit gitignore wd)
 source \$ZSH/oh-my-zsh.sh
 export PROMPT='%{\$fg_bold[green]%}%p%(?:%{%}➜ :%{%}➜ ) %(!.%{%F{yellow}%}.)\$USER@%{\$fg[white]%}%M %{\$fg[cyan]%}%c%{\$reset_color%} \$(git_prompt_info)'
 EOF
+  else
+    _log "oh-my-zsh already installed"
   fi
 }
 
@@ -37,6 +39,8 @@ install_tailscale() {
   if ! command -v tailscale &>/dev/null; then
     _log "Installing tailscale"
     curl -fsSL https://tailscale.com/install.sh | sh
+  else
+    _log "tailscale already installed"
   fi
 }
 
@@ -48,6 +52,8 @@ install_docker() {
       sudo usermod -aG docker $USER
       newgrp docker
     fi
+  else
+    _log "docker already installed"
   fi
 }
 
@@ -61,6 +67,8 @@ install_apt() {
       apt update && sudo apt install -y curl git zsh vim direnv
     fi
     touch ~/.apt_installed
+  else
+    _log "apt packages already installed"
   fi
 }
 
@@ -69,6 +77,8 @@ maybe_install_k3s() {
     _log "Installing k3s"
     curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode=644 --docker --disable=traefik
     touch ~/.k3s_installed
+  else
+    _log "k3s already installed"
   fi
 }
 
@@ -126,13 +136,15 @@ maybe_create_proxmox_template() {
     qm importdisk $VM_ID $ABSOLUTE_IMAGE_PATH local-lvm
 
     _log "Setting VM properties..."
-    qm set $VM_ID --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-$VM_ID-disk-0,size=32G,ssd=1
+    qm set $VM_ID --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-$VM_ID-disk-0,size=36352M,ssd=1
     qm set $VM_ID --boot c --bootdisk scsi0
     qm set $VM_ID --ide2 local-lvm:cloudinit
     qm set $VM_ID --autostart 1
 
     _log "Creating VM template..."
     qm template $VM_ID
+  else
+    _log "Skipping proxmox template creation"
   fi
 }
 
