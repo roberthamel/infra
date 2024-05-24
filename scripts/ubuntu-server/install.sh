@@ -49,7 +49,7 @@ install_tailscale() {
 install_docker() {
   if ! command -v docker &>/dev/null; then
     curl -fsSL https://get.docker.com | sudo sh
-    if [[ ! $is_root ]]; then
+    if [[ $is_root == false ]]; then
       _log "Adding user to docker group"
       sudo usermod -aG docker $USER
       newgrp docker
@@ -66,7 +66,7 @@ install_apt() {
     if [[ $is_root == false ]]; then
       sudo apt update && sudo apt install -y curl git zsh vim direnv qemu-guest-agent
     else
-      apt update && sudo apt install -y curl git zsh vim direnv
+      apt update && apt install -y curl git zsh vim direnv
     fi
     touch ~/.apt_installed
   else
