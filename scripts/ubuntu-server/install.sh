@@ -54,7 +54,6 @@ install_docker() {
 install_apt() {
   if [[ ! -f ~/.apt_installed ]]; then
     _log "Installing apt packages"
-    _log "is_root: $is_root"
     local maybe_sudo=""
     if [[ $is_root == false ]]; then
       sudo apt update && sudo apt install -y curl git zsh vim direnv qemu-guest-agent
