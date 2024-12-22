@@ -15,7 +15,7 @@ services:
       - mini
     labels:
       - tsdproxy.enable=true
-      - tsdproxy.name=minitsproxy
+      - tsdproxy.name=tsproxy-mini
 networks:
   mini:
     external: true
