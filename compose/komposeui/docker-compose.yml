@@ -1,6 +1,0 @@
-services:
-  komposeui:
-    image: jadcham/komposeui
-    container_name: komposeui
-    ports:
-      - "8000:8000"

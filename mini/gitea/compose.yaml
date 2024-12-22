@@ -1,0 +1,72 @@
+networks:
+  mini:
+    external: false
+services:
+  gitea:
+    image: gitea/gitea:latest
+    container_name: gitea
+    restart: always
+    environment:
+      - APP_NAME=gitea
+      - USER_UID=1000
+      - USER_GID=1000
+      - USER=git
+      - RUN_MODE=prod
+      - DOMAIN=mini
+      - SSH_DOMAIN=mini
+      - HTTP_PORT=3000
+      - ROOT_URL=${GITEA_ROOT_URL?Variable GITEA_ROOT_URL not set}
+      - SSH_PORT=2999
+      - SSH_LISTEN_PORT=22
+      - DB_TYPE=sqlite3
+      - GIT_SSL_NO_VERIFY=true
+    networks:
+      - mini
+    volumes:
+      - $SERVER_DATA_LOCATION/gitea/gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "3000:3000"
+      - "2999:22"
+  # runner:
+  #   image: gitea/act_runner:nightly
+  #   environment:
+  #     GITEA_INSTANCE_URL: https://git.rhcloud.dev
+  #     GITEA_RUNNER_REGISTRATION_TOKEN: YqOQjzGTgbCGdeSFbO2xTQXeS4TNKE1mXAUxCO4z
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  # woodpecker-server:
+  #   image: woodpeckerci/woodpecker-server:latest
+  #   ports:
+  #     - target: 8000
+  #       published: 8000
+  #       mode: host
+  #   volumes:
+  #     - $SERVER_DATA_LOCATION/woodpecker:/var/lib/woodpecker
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     - WOODPECKER_OPEN=true
+  #     - WOODPECKER_HOST=https://git.rhcloud.dev
+  #     - WOODPECKER_GITEA=true
+  #     - WOODPECKER_GITEA_URL=https://git.rhcloud.dev
+  #     - WOODPECKER_GITEA_CLIENT=e5a17661-6308-4ac7-9f8b-8566252e4af9
+  #     - WOODPECKER_GITEA_SECRET=gto_y7iigvjyoz6442hitagtkfb4w37h5fn2rqx33xrv7uv5g4qzhmta
+  #     - WOODPECKER_AGENT_SECRET=eoeVSUVqTHK2EC1IJpI9QBBNOdRPxHj7
+  #   networks:
+  #     - gitea
+  #     - proxy
+  # woodpecker-agent:
+  #   image: woodpeckerci/woodpecker-agent:latest
+  #   command: agent
+  #   restart: always
+  #   depends_on:
+  #     - woodpecker-server
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     - WOODPECKER_SERVER=woodpecker-server:8000
+  #     - WOODPECKER_AGENT_SECRET=eoeVSUVqTHK2EC1IJpI9QBBNOdRPxHj7
+  #   networks:
+  #     - gitea
