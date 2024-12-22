@@ -9,7 +9,7 @@ services:
       - $SERVER_DATA_LOCATION/opengist:/opengist
     environment:
       - OG_SSH_GIT_ENABLED=false
-      - OG_EXTERNAL_URL=https://gist.rhcloud.dev
+      - OG_EXTERNAL_URL=${OPENGIST_EXTERNAL_URL:-?fail}
     networks:
       - mini
     healthcheck:
