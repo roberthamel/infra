@@ -2,6 +2,7 @@ services:
   komposeui:
     image: jadcham/komposeui
     container_name: komposeui
+    restart: always
     ports:
       - "8000:8000"
     labels:

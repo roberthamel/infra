@@ -10,7 +10,7 @@ up: ## Start the services
 	@docker network create mini ||:
 	@for dir in */; do \
 		service_name=$${dir%/}; \
-		docker compose -p $$service_name -f $$service_name/compose.yaml up -d --remove-orphans --force-recreate; \
+		docker compose -p $$service_name -f $$service_name/compose.yaml up -d --remove-orphans --force-recreate --pull always; \
 		echo "✅ $$service_name started"; \
 	done
 

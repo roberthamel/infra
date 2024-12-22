@@ -1,0 +1,14 @@
+services:
+  memos:
+    image: neosmemo/memos:stable
+    container_name: workmemos
+    restart: always
+    volumes:
+      - $SERVER_DATA_LOCATION/workmemos:/var/opt/memos
+    ports:
+      - 5231:5230
+    networks:
+      - mini
+networks:
+  mini:
+    external: true
