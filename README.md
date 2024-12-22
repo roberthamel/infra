@@ -11,3 +11,4 @@ bash <(curl -s https://raw.githubusercontent.com/roberthamel/infra/main/install.
 ## Machines
 
 - `mini`
+- `gtr`
