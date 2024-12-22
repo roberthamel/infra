@@ -10,7 +10,7 @@ up: ## Start the services
 	@docker network create mini ||:
 	@for dir in */; do \
 		service_name=$${dir%/}; \
-		docker compose -p $$service_name -f $$service_name/compose.yaml up -d --remove-orphans --force-recreate --pull always; \
+		docker compose -p $$service_name -f $$service_name/compose.yaml up -d --remove-orphans --force-recreate; \
 		echo "✅ $$service_name started"; \
 	done
 
@@ -29,3 +29,9 @@ ps: ## List all running services
 
 logs: ## Show logs for a specific service
 	@docker compose -p $(service) -f $(service)/compose.yaml logs -f
+
+kill: ## stop a specific container (make kill c=gitea)
+	@docker compose -p $(c) -f $(c)/compose.yaml down
+
+start: ## launch a specific container (make start c=gitea)
+	@docker compose -p $(c) -f $(c)/compose.yaml up -d --remove-orphans --force-recreate
