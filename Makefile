@@ -6,5 +6,3 @@ init:
 	@brew bundle --no-lock > /dev/null
 	@echo "Done."
 
-devcontainer:
-

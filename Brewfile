@@ -1,2 +1,0 @@
-brew "devbox"
-brew "devcontainer"

@@ -1,1 +1,2 @@
 .envrc filter=git-crypt diff=git-crypt
+mini/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
