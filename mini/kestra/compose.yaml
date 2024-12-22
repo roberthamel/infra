@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - $SERVER_DATA_LOCATION/kestra/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${KESTRA_PG_DB?Variable KESTRA_PG_DB not set}
+      POSTGRES_USER: ${KESTRA_PG_USER?Variable KESTRA_PG_USER not set}
+      POSTGRES_PASSWORD: ${KESTRA_PG_PASSWORD?Variable KESTRA_PG_PASSWORD not set}
+    networks:
+      - kestra
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+  kestra:
+    image: kestra/kestra:latest
+    container_name: kestra
+    restart: always
+    user: "root"
+    command: server standalone
+    volumes:
+      - $SERVER_DATA_LOCATION/kestra/storage:/app/storage
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/kestra-wd:/tmp/kestra-wd
+    environment:
+      KESTRA_CONFIGURATION: ${KESTRA_CONFIGURATION?Variable KESTRA_CONFIGURATION not set}
+    ports:
+      - "7676:8080"
+      - "7677:8081"
+    depends_on:
+      postgres:
+        condition: service_started
+    networks:
+      - mini
+      - kestra
+
+networks:
+  mini:
+    external: true
+  kestra:
+    external: false
