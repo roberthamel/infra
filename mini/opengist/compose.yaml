@@ -1,0 +1,22 @@
+services:
+  opengist:
+    image: ghcr.io/thomiceli/opengist:1
+    container_name: opengist
+    restart: unless-stopped
+    ports:
+      - "6157:6157"
+    volumes:
+      - $SERVER_DATA_LOCATION/opengist:/opengist
+    environment:
+      - OG_SSH_GIT_ENABLED=false
+      - OG_EXTERNAL_URL=https://gist.rhcloud.dev
+    networks:
+      - mini
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://opengist:6157/healthcheck"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+networks:
+  mini:
+    external: true

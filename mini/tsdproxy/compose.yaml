@@ -4,7 +4,7 @@ services:
     container_name: tsdproxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./data:/data
+      - $SERVER_DATA_LOCATION/tsdproxy:/data
       - ./config:/config
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock

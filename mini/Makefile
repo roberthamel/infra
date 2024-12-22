@@ -26,3 +26,6 @@ ps: ## List all running services
 	@echo "------------------------------------------------------"
 	@docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Ports}}"
 	@echo "------------------------------------------------------"
+
+logs: ## Show logs for a specific service
+	@docker compose -p $(service) -f $(service)/compose.yaml logs -f
