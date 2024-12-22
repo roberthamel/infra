@@ -21,7 +21,7 @@ services:
       - PROTOCOL=UDP
       - CATEGORY=P2P
       - OPENVPN_OPTS=--pull-filter ignore "ping-restart" --ping-exit 120
-      - TZ=${VPN_TZ:-?fail}
+      - TZ='America/New_York'
     ports:
       - 9091:9091 # Transmission web UI
       - 51413:51413 # Transmission bittorrent daemon
@@ -35,7 +35,7 @@ services:
     environment:
       - PUID=${BT_PUID:-?fail}
       - PGID=${BT_PGID:-?fail}
-      - TZ=${VPN_TZ:-?fail}
+      - TZ='America/New_York'
     volumes:
       - ./downloads/:/downloads
       - ./config/transmission:/config
