@@ -12,3 +12,11 @@ bash <(curl -s https://raw.githubusercontent.com/roberthamel/infra/main/install.
 
 - `mini`
 - `gtr`
+
+## `rnas`
+
+Folder containing reference compose files for services running on the nas.
+
+## Next
+
+Folder containing placeholders for future deployments.
