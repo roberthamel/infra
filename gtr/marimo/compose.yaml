@@ -6,7 +6,7 @@ services:
     restart: always
     init: true
     ports:
-      - "7777:7777"
+      - "8080:8080"
     volumes:
       - marimo_data:/app
     labels:
