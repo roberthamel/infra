@@ -7,7 +7,7 @@ help: ## Show this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9_-]+:.*?## / {printf "  %-20s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 up: ## Start the services
-	@docker network create mini ||:
+	@docker network create msi ||:
 	@for dir in */; do \
 		service_name=$${dir%/}; \
 		docker compose -p $$service_name -f $$service_name/compose.yaml up -d --remove-orphans --force-recreate; \
