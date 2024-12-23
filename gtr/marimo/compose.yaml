@@ -14,12 +14,6 @@ services:
       - tsdproxy.name=marimo
     networks:
       - gtr
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://marimo:7777/health"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
 volumes:
   marimo_data:
 networks:
