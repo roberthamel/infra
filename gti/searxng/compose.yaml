@@ -1,0 +1,57 @@
+services:
+  searxng-redis:
+    image: docker.io/valkey/valkey:8-alpine
+    hostname: searxng-redis
+    container_name: searxng-redis
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: always
+    healthcheck:
+      test: "[ $$(valkey-cli ping) = 'PONG' ]"
+      start_period: 5s
+      timeout: 3s
+      interval: 1s
+      retries: 5
+    volumes:
+      - valkey-data:/data
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+
+  searxng:
+    restart: unless-stopped
+    hostname: searxng
+    container_name: searxng
+    ports:
+      - "8080:8080"
+    depends_on:
+      searxng-redis:
+        condition: service_healthy
+    labels:
+      - tsdproxy.enable=true
+      - tsdproxy.name=search
+    healthcheck:
+      test: "wget http://searxng:8080/healthz -q -O - | cat - || exit 1"
+      start_period: 5s
+      timeout: 3s
+      interval: 1s
+      retries: 5
+    image: docker.io/searxng/searxng:latest
+    volumes:
+      - searxng-data:/etc/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=http://searxng:8080/
+      - UWSGI_WORKERS=${SEARXNG_UWSGI_WORKERS:-4}
+      - UWSGI_THREADS=${SEARXNG_UWSGI_THREADS:-4}
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+
+volumes:
+  valkey-data:
+  searxng-data:
