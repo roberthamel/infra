@@ -6,7 +6,7 @@ services:
     restart: always
     init: true
     ports:
-      - "7777:7777"
+      - "7777:8080"
     volumes:
       - marimo_data:/app
     labels:
@@ -14,6 +14,12 @@ services:
       - tsdproxy.name=marimo
     networks:
       - gtr
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://marimo:8080/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 volumes:
   marimo_data:
 networks:
