@@ -21,6 +21,12 @@ services:
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=coder
+      - homepage.group=gtr
+      - homepage.name=coder
+      - homepage.instance.public.href=https://coder.porcupine-coho.ts.net
+      - homepage.instance.public.ping=https://coder.porcupine-coho.ts.net
+      - homepage.description=Coder is a web-based development environment for writing code. It's a self-hosted alternative to VS Code.
+      - homepage.showStats=true
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:7080"]
       interval: 1m30s

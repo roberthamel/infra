@@ -1,7 +1,17 @@
 - resources:
     cpu: true
     memory: true
+    expanded: true
+    refresh: 5000
+    label: System
     disk: /
 - search:
     provider: google
     target: _blank
+- datetime:
+    text_size: x1
+    format:
+        timeStyle: short
+        dateStyle: short
+        hour12: true
+        timeZone: America/New_York

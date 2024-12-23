@@ -12,6 +12,11 @@ services:
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=marimo
+      - homepage.group=gtr
+      - homepage.name=marimo
+      - homepage.instance.public.href=https://marimo.porcupine-coho.ts.net
+      - homepage.instance.public.ping=https://marimo.porcupine-coho.ts.net
+      - homepage.description=Marimo is a better jupyter notebook.
     networks:
       - gtr
 volumes:

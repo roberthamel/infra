@@ -1,0 +1,4 @@
+gtr:
+  socket: dockerproxy
+  swarm: false
+  port: 2375
