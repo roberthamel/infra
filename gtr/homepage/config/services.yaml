@@ -1,0 +1,10 @@
+- Self-Hosted:
+  - Pihole:
+      icon: https://upload.wikimedia.org/wikipedia/commons/0/00/Pi-hole_Logo.png
+      href: https://pihole.porcupine-coho.ts.net/admin
+      ping: https://pihole.porcupine-coho.ts.net/admin
+      description: "Pihole is a network-wide ad blocker. It blocks ads on all devices connected to your network."
+      widget:
+        type: pihole
+        url: https://pihole.porcupine-coho.ts.net/admin
+        key: ""
