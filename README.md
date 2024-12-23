@@ -12,6 +12,8 @@ bash <(curl -s https://raw.githubusercontent.com/roberthamel/infra/main/install.
 
 - `mini`
 - `gtr`
+- `gti`
+- `msi`
 
 ## `rnas`
 
