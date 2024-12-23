@@ -1,0 +1,18 @@
+services:
+  homepage:
+    image: ghcr.io/benphelps/homepage:latest
+    container_name: homepage
+    restart: always
+    ports:
+      - "7999:3000"
+    networks:
+      - gtr
+    volumes:
+      - ./config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - tsdproxy.enable=true
+      - tsdproxy.name=homepage
+networks:
+  gtr:
+    external: true
