@@ -8,6 +8,12 @@ services:
       - mini
     ports:
       - 6444:6443
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "6443"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 networks:
   mini:
     external: true

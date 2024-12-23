@@ -9,6 +9,12 @@ services:
       - 5230:5230
     networks:
       - mini
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5230/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 networks:
   mini:
     external: true
