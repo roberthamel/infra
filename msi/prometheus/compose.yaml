@@ -1,0 +1,23 @@
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: always
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    volumes:
+      - prometheus_storage:/etc/prometheus
+      - prometheus_data:/prometheus
+    networks:
+      - msi
+    labels:
+      - tsdproxy.enable=true
+      - tsdproxy.name=prometheus
+volumes:
+  prometheus_storage:
+  prometheus_data:
+networks:
+  msi:
+    external: true

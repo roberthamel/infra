@@ -1,3 +1,5 @@
 .envrc filter=git-crypt diff=git-crypt
 mini/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
 gtr/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
+msi/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
+gti/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
