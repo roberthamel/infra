@@ -9,6 +9,11 @@ services:
       - grafana_storage:/var/lib/grafana
     networks:
       - msi
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --quiet http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 volumes:
   grafana_storage:
 networks:

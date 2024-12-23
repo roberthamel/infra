@@ -8,15 +8,19 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - prometheus_storage:/etc/prometheus
+      - ./prometheus:/etc/prometheus
       - prometheus_data:/prometheus
     networks:
       - msi
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=prometheus
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --quiet http://localhost:9090/-/healthy || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 volumes:
-  prometheus_storage:
   prometheus_data:
 networks:
   msi:
