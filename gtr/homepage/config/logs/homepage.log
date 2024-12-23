@@ -1894,3 +1894,79 @@
     port: 443
   }
 ]
+[2024-12-23T16:47:35.170Z] error: <dockerStatusService> Error: connect ENOENT dockerproxy
+    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+[2024-12-23T16:47:35.236Z] error: <httpProxy> Error calling https://pihole.porcupine-coho.ts.net/admin...
+[2024-12-23T16:47:35.237Z] error: <httpProxy> [
+  500,
+  Error: connect ECONNREFUSED 100.71.251.114:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '100.71.251.114',
+    port: 443
+  }
+]
+[2024-12-23T16:47:35.243Z] error: <httpProxy> Error calling https://pihole.porcupine-coho.ts.net/admin...
+[2024-12-23T16:47:35.244Z] error: <httpProxy> [
+  500,
+  Error: connect ECONNREFUSED 100.71.251.114:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '100.71.251.114',
+    port: 443
+  }
+]
+[2024-12-23T16:47:35.249Z] error: <httpProxy> Error calling https://pihole.porcupine-coho.ts.net/admin/api.php...
+[2024-12-23T16:47:35.249Z] error: <httpProxy> [
+  500,
+  Error: connect ECONNREFUSED 100.71.251.114:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '100.71.251.114',
+    port: 443
+  }
+]
+[2024-12-23T16:55:51.755Z] error: <dockerStatusService> Error: connect ENOENT dockerproxy
+    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1555:16)
+[2024-12-23T16:55:51.782Z] error: <httpProxy> Error calling https://pihole.porcupine-coho.ts.net/admin...
+[2024-12-23T16:55:51.782Z] error: <httpProxy> [
+  500,
+  Error: connect ECONNREFUSED 100.71.251.114:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '100.71.251.114',
+    port: 443
+  }
+]
+[2024-12-23T16:55:51.788Z] error: <httpProxy> Error calling https://pihole.porcupine-coho.ts.net/admin/api.php...
+[2024-12-23T16:55:51.789Z] error: <httpProxy> [
+  500,
+  Error: connect ECONNREFUSED 100.71.251.114:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '100.71.251.114',
+    port: 443
+  }
+]
+[2024-12-23T16:55:51.802Z] error: <httpProxy> Error calling https://pihole.porcupine-coho.ts.net/admin...
+[2024-12-23T16:55:51.802Z] error: <httpProxy> [
+  500,
+  Error: connect ECONNREFUSED 100.71.251.114:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1555:16) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '100.71.251.114',
+    port: 443
+  }
+]
