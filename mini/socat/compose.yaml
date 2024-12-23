@@ -1,0 +1,13 @@
+services:
+  socat:
+    image: alpine/socat
+    container_name: socat
+    restart: always
+    command: TCP-LISTEN:6443,fork TCP:docker-desktop:6443
+    networks:
+      - mini
+    ports:
+      - 6444:6443
+networks:
+  mini:
+    external: true
