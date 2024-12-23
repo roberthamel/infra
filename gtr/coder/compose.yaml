@@ -5,6 +5,7 @@ services:
     restart: always
     ports:
       - "7080:7080"
+    privileged: true
     environment:
       CODER_PG_CONNECTION_URL: "postgresql://${CODER_PG_USER?fail}:${CODER_PG_PASSWORD?fail}@postgres/${CODER_PG_DB?fail}?sslmode=disable"
       CODER_HTTP_ADDRESS: "0.0.0.0:7080"
