@@ -11,6 +11,8 @@ services:
       timeout: 3s
       interval: 1s
       retries: 5
+    networks:
+      - searxng
     volumes:
       - valkey-data:/data
     cap_drop:
@@ -32,6 +34,9 @@ services:
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=search
+    networks:
+      - searxng
+      - gti
     healthcheck:
       test: "wget http://searxng:8080/healthz -q -O - | cat - || exit 1"
       start_period: 5s
@@ -55,3 +60,9 @@ services:
 volumes:
   valkey-data:
   searxng-data:
+
+networks:
+  gti:
+    external: true
+  searxng:
+    external: false
