@@ -1,0 +1,20 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: always
+    volumes:
+      - open-webui-data:/app/backend/data
+    ports:
+      - 8686:8080
+    networks:
+      - gti
+    environment:
+      - OLLAMA_BASE_URL=http://192.168.88.245:11434
+      - WEBUI_SECRET_KEY=
+volumes:
+  open-webui-data:
+networks:
+  gti:
+    external: true
+
