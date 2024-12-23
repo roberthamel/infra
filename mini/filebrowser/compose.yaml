@@ -1,0 +1,25 @@
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    restart: always
+    volumes:
+      - $FB_SHARE_DIR:/srv
+      - $SERVER_DATA_LOCATION/filebrowser/database.db:/database.db
+      - $SERVER_DATA_LOCATION/filebrowser/settings.json:/config/settings.json
+    environment:
+      - PUID=$(id -u)
+      - PGID=$(id -g)
+    ports:
+      - 8095:80
+    networks:
+      - mini
+    labels:
+      - tsdproxy.enable=true
+      - tsdproxy.name=fs
+volumes:
+  filebrowser_data:
+  filebrowser_config:
+networks:
+  mini:
+    external: true
