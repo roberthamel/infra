@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  it-tools:
+    image: 'corentinth/it-tools:latest'
+    container_name: tools
+    ports:
+      - '8126:80'
+    restart: always
+    networks:
+      - mini
+networks:
+  mini:
+    external: true
