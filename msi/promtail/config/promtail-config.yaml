@@ -11,8 +11,31 @@ clients:
 scrape_configs:
 - job_name: system
   static_configs:
-  - targets:
-      - localhost
-    labels:
-      job: varlogs
-      __path__: /var/log/*log
+  - job_name: msi
+    static_configs:
+    - targets:
+        - localhost
+      labels:
+        job: varlogs
+        __path__: /var/log/*log
+  - job_name: gti
+    static_configs:
+    - targets:
+        - gti.home
+      labels:
+        job: varlogs
+        __path__: /var/log/*log
+  - job_name: gtr
+    static_configs:
+    - targets:
+        - gtr.home
+      labels:
+        job: varlogs
+        __path__: /var/log/*log
+  - job_name: mini
+    static_configs:
+    - targets:
+        - mini.home
+      labels:
+        job: varlogs
+        __path__: /var/log/*log
