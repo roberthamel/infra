@@ -1,0 +1,20 @@
+services:
+  marimo:
+    build: .
+    image: marimo:latest
+    container_name: marimo
+    restart: always
+    ports:
+      - "7777:7777"
+    volumes:
+      - marimo_data:/app
+    labels:
+      - tsdproxy.enable=true
+      - tsdproxy.name=marimo
+    networks:
+      - gtr
+volumes:
+  marimo_data:
+networks:
+  gtr:
+    external: true
