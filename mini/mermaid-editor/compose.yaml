@@ -1,0 +1,58 @@
+# docker run --platform linux/amd64 --publish 8000:8080 ghcr.io/mermaid-js/mermaid-live-editor
+services:
+  mermaid-editor:
+    image: ghcr.io/mermaid-js/mermaid-live-editor
+    container_name: mermaid-editor
+    restart: always
+    ports:
+      - "7500:8080"
+    networks:
+      - mini
+      - kroki
+    environment:
+      MERMAID_RENDERER_URL:
+  kroki:
+    image: yuzutech/kroki
+    container_name: kroki
+    restart: always
+    depends_on:
+      - mermaid
+      - bpmn
+      - excalidraw
+    environment:
+      - KROKI_MERMAID_HOST=mermaid
+      - KROKI_BPMN_HOST=bpmn
+      - KROKI_EXCALIDRAW_HOST=excalidraw
+    ports:
+      - "18000:8000"
+    networks:
+      - mini
+      - kroki
+  mermaid:
+    image: yuzutech/kroki-mermaid
+    container_name: kroki-mermaid
+    restart: always
+    expose:
+      - "8002"
+    networks:
+      - kroki
+  bpmn:
+    image: yuzutech/kroki-bpmn
+    container_name: kroki-bpmn
+    restart: always
+    expose:
+      - "8003"
+    networks:
+      - kroki
+  excalidraw:
+    image: yuzutech/kroki-excalidraw
+    container_name: kroki-excalidraw
+    expose:
+      - "8004"
+    networks:
+      - kroki
+networks:
+  mini:
+    external: true
+  kroki:
+    external: false
