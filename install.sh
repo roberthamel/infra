@@ -19,7 +19,7 @@ if [[ ! -d "$HOME/workspace" || ! -d "$HOME/workspace/infra" ]]; then
   echo "Creating workspace directory..."
   mkdir -p $HOME/workspace
   echo "Cloning infra repository..."
-  git clone https://github.com/roberthamel/infra.git $HOME/workspace/infra
+  git clone --recurse-submodules https://github.com/roberthamel/infra.git $HOME/workspace/infra
 fi
 
 cd $HOME/workspace/infra

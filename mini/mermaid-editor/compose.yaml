@@ -1,16 +1,26 @@
 # docker run --platform linux/amd64 --publish 8000:8080 ghcr.io/mermaid-js/mermaid-live-editor
 services:
   mermaid-editor:
-    image: ghcr.io/mermaid-js/mermaid-live-editor
+    build:
+      context: ./mermaid-live-editor
+      dockerfile: Dockerfile
+      args:
+        MERMAID_DOMAIN: "https://mermaid.rhcloud.dev"
+        MERMAID_RENDERER_URL: https://mermaid.rhcloud.dev
+        MERMAID_KROKI_RENDERER_URL: https://kroki.rhcloud.dev
+        MERMAID_IS_ENABLED_MERMAID_CHART_LINKS: "false"
+    image: mermaid-live-editor
     container_name: mermaid-editor
     restart: always
+    volumes:
+      - $SERVER_DATA_LOCATION/mermaid-editor:/app/data
     ports:
       - "7500:8080"
     networks:
       - mini
       - kroki
-    environment:
-      MERMAID_RENDERER_URL:
+    depends_on:
+      - kroki
   kroki:
     image: yuzutech/kroki
     container_name: kroki
@@ -24,7 +34,7 @@ services:
       - KROKI_BPMN_HOST=bpmn
       - KROKI_EXCALIDRAW_HOST=excalidraw
     ports:
-      - "18000:8000"
+      - "7501:8000"
     networks:
       - mini
       - kroki
