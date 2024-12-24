@@ -3,3 +3,4 @@ mini/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
 gtr/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
 msi/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
 gti/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
+mini/mermaid-editor/Caddyfile filter=git-crypt diff=git-crypt

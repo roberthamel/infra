@@ -1,4 +1,3 @@
-# docker run --platform linux/amd64 --publish 8000:8080 ghcr.io/mermaid-js/mermaid-live-editor
 services:
   mermaid-editor:
     build:
@@ -14,10 +13,9 @@ services:
     restart: always
     volumes:
       - $SERVER_DATA_LOCATION/mermaid-editor:/app/data
-    ports:
-      - "7500:8080"
+    expose:
+      - 8080
     networks:
-      - mini
       - kroki
     depends_on:
       - kroki
@@ -61,6 +59,23 @@ services:
       - "8004"
     networks:
       - kroki
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: always
+    ports:
+      - "7500:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - mini
+      - kroki
+    depends_on:
+      - mermaid-editor
+      - kroki
+      - mermaid
+      - bpmn
+      - excalidraw
 networks:
   mini:
     external: true

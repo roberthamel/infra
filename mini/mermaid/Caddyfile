@@ -1,0 +1,13 @@
+{
+    auto_https off
+}
+
+:80 {
+    basicauth /* {
+        rh $2a$14$qP2OO0X.LBDQ3P8MC5bA4..K/xFV8MeILFazqDKlPPwAAaANsPF0S
+    }
+
+    handle /* {
+        reverse_proxy mermaid-editor:8080
+    }
+}

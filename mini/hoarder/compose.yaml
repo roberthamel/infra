@@ -15,7 +15,7 @@ services:
       NEXTAUTH_SECRET: ${HOARDER_NEXTAUTH_SECRET?Variable not set}
       DATA_DIR: /data
       DISABLE_SIGNUPS: "true"
-      OLLAMA_BASE_URL: "https://rhms.home:11434"
+      OLLAMA_BASE_URL: "http://rhms.home:11434"
       INFERENCE_TEXT_MODEL: "qwen2.5:32b"
       INFERENCE_IMAGE_MODEL: "llama3.2-vision:90b"
     networks:
