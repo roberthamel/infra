@@ -3,6 +3,8 @@ services:
     image: jadcham/komposeui
     container_name: komposeui
     restart: always
+    volumes:
+      - $SERVER_DATA_LOCATION/komposeui/media:/usr/src/app/media
     ports:
       - "8000:8000"
     labels:
