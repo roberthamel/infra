@@ -1,0 +1,12 @@
+services:
+  docker-proxy:
+    image: alpine/socat
+    container_name: docker-socket-proxy
+    command: -d TCP-LISTEN:2376,range=172.30.0.0/24,reuseaddr,fork UNIX:/var/run/docker.sock
+    ports:
+      - "2376:2376"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
