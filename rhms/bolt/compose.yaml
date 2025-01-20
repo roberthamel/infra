@@ -1,0 +1,38 @@
+networks:
+  rhms:
+    external: true
+
+services:
+  bolt:
+    image: bolt-ai:production
+    container_name: bolt
+    restart: unless-stopped
+    build:
+      context: bolt.diy
+      dockerfile: Dockerfile
+      target: bolt-ai-production
+    networks:
+      - rhms
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=production
+      - COMPOSE_PROFILES=production
+      # No strictly needed but serving as hints for Coolify
+      - PORT=5173
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - HuggingFace_API_KEY=${HuggingFace_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPEN_ROUTER_API_KEY=${OPEN_ROUTER_API_KEY}
+      - GOOGLE_GENERATIVE_AI_API_KEY=${GOOGLE_GENERATIVE_AI_API_KEY}
+      - OLLAMA_API_BASE_URL=http://192.168.88.245:11434
+      - LMSTUDIO_API_BASE_URL=http://192.168.88.245:1234
+      - TOGETHER_API_KEY=${TOGETHER_API_KEY}
+      - TOGETHER_API_BASE_URL=${TOGETHER_API_BASE_URL}
+      - VITE_LOG_LEVEL=${VITE_LOG_LEVEL:-debug}
+      - DEFAULT_NUM_CTX=${DEFAULT_NUM_CTX:-32768}
+      - RUNNING_IN_DOCKER=true
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
+    command: pnpm run dockerstart

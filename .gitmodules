@@ -1,3 +1,7 @@
 [submodule "mini/mermaid-editor/mermaid-live-editor"]
 	path = mini/mermaid/mermaid-live-editor
 	url = https://github.com/mermaid-js/mermaid-live-editor.git
+[submodule "rhms/bolt/bolt.diy"]
+	path = rhms/bolt/bolt.diy
+	url = https://github.com/stackblitz-labs/bolt.diy
+	branch = stable
