@@ -28,7 +28,7 @@ ps: ## List all running services
 	@echo "------------------------------------------------------"
 
 logs: ## Show logs for a specific service
-	@docker compose -p $(service) -f $(service)/compose.yaml logs -f
+	@docker compose -p $(c) -f $(c)/compose.yaml logs -f
 
 kill: ## stop a specific container (make kill c=gitea)
 	@docker compose -p $(c) -f $(c)/compose.yaml down
