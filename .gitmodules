@@ -5,3 +5,6 @@
 	path = rhms/bolt/bolt.diy
 	url = https://github.com/stackblitz-labs/bolt.diy
 	branch = stable
+[submodule "rhms/cursorlens/cursorlens"]
+	path = rhms/cursorlens/cursorlens
+	url = https://github.com/hamedmp/cursorlens
