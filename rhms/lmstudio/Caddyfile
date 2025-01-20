@@ -1,0 +1,17 @@
+{
+  auto_https off
+  admin off
+}
+
+:80 {
+  # Require API key in header
+  request_header X-API-Key {$API_KEY}
+  request_header Authorization Bearer {$API_KEY}
+
+  # Remove API key before proxying to prevent leaking it
+  request_header -X-API-Key
+  request_header -Authorization
+
+  # Reverse proxy to LM Studio running on host machine
+  reverse_proxy host.docker.internal:1234
+}

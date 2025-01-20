@@ -1,4 +1,4 @@
-.PHONY: help up down ps
+.PHONY: help up down ps bolt
 
 help: ## Show this help
 	@echo "Usage: make [target]"
@@ -35,3 +35,12 @@ kill: ## stop a specific container (make kill c=gitea)
 
 start: ## launch a specific container (make start c=gitea)
 	@docker compose -p $(c) -f $(c)/compose.yaml up -d --remove-orphans --force-recreate --build
+
+bolt:
+	cd bolt && process-compose -D -f process-compose.yaml -t=false
+
+bolt-stop:
+	cd bolt && process-compose down
+
+attach:
+	cd bolt && process-compose attach
