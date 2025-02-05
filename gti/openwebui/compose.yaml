@@ -9,12 +9,67 @@ services:
       - 8686:8080
     networks:
       - gti
+      - webui
     environment:
       - OLLAMA_BASE_URL=http://192.168.88.245:11434
       - WEBUI_SECRET_KEY=
+      - ENABLE_RAG_WEB_SEARCH=True
+      - RAG_WEB_SEARCH_ENGINE="searxng"
+      - RAG_WEB_SEARCH_RESULT_COUNT=3
+      - RAG_WEB_SEARCH_CONCURRENT_REQUESTS=10
+      - SEARXNG_QUERY_URL="http://webui-searxng:8080/search?q=<query>"
+  webui-searxng-redis:
+    container_name: webui-searxng-redis
+    image: docker.io/valkey/valkey:8-alpine
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: unless-stopped
+    networks:
+      - webui
+    volumes:
+      - valkey-data2:/data
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+  webui-searxng:
+    container_name: webui-searxng
+    image: docker.io/searxng/searxng:latest
+    restart: unless-stopped
+    networks:
+      - webui
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    environment:
+      - SEARXNG_HOSTNAME=webui-searxng:8080
+      - SEARXNG_BASE_URL=http://webui-searxng:8080
+      - SEARXNG_REDIS_URL=redis://webui-searxng-redis:6379
+      - UWSGI_WORKERS=4
+      - UWSGI_THREADS=4
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
 volumes:
   open-webui-data:
+  valkey-data2:
 networks:
   gti:
     external: true
+  webui:
+    external: false
 
