@@ -11,13 +11,8 @@ services:
       - gti
       - webui
     environment:
-      - OLLAMA_BASE_URL=http://192.168.88.245:11434
-      - WEBUI_SECRET_KEY=
-      - ENABLE_RAG_WEB_SEARCH=True
-      - RAG_WEB_SEARCH_ENGINE="searxng"
-      - RAG_WEB_SEARCH_RESULT_COUNT=3
-      - RAG_WEB_SEARCH_CONCURRENT_REQUESTS=10
-      - SEARXNG_QUERY_URL="http://webui-searxng:8080/search?q=<query>"
+      - OLLAMA_BASE_URL=${GTI_OLLAMA_BASE_URL?fail}
+      - WEBUI_SECRET_KEY=${OPENWEBUI_API_KEY?fail}
   webui-searxng-redis:
     container_name: webui-searxng-redis
     image: docker.io/valkey/valkey:8-alpine
