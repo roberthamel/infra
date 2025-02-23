@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -eEuo pipefail
+
+# Script to manage git submodules
+
+usage() {
+    echo "Usage: $0 {add|update|list} [repository_url] [path]"
+    echo "  add       Add a new submodule"
+    echo "  update    Update existing submodules"
+    echo "  list      List all submodules"
+    echo "  remove    Remove an existing submodule"
+    exit 1
+}
+
+case "$1" in
+    add)
+        if [ -z "$2" ] || [ -z "$3" ]; then
+            echo "Error: Repository URL and path are required for adding a submodule."
+            usage
+        fi
+        git submodule add "$2" "$3"
+        ;;
+    update)
+        git submodule update --init --recursive
+        ;;
+    list)
+        git submodule status
+        ;;
+    remove)
+        if [ -z "$2" ]; then
+            echo "Error: Path is required for removing a submodule."
+            usage
+        fi
+        git submodule deinit -f -- "$2"
+        rm -rf ".git/modules/$2"
+        git rm -f "$2"
+        ;;
+    *)
+        echo "Invalid command: $1"
+        usage
+        ;;
+esac
+
+exit 0

@@ -13,9 +13,6 @@ services:
       - "8888:8080"
     networks:
       - mini
-    labels:
-      - tsdproxy.enable=true
-      - tsdproxy.name=tsproxy-mini
 networks:
   mini:
     external: true
