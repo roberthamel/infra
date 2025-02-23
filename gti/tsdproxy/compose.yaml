@@ -14,9 +14,6 @@ services:
       - "8888:8080"
     networks:
       - gti
-    labels:
-      - tsdproxy.enable=true
-      - tsdproxy.name=tsproxy-gti
 volumes:
   tsdproxy_data:
 networks:
