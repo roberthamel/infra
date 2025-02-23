@@ -59,6 +59,12 @@
             - type: reddit
               subreddit: onebag
               show-thumbnails: true
+            - type: reddit
+              subreddit: usefulscripts
+              show-thumbnails: true
+            - type: reddit
+              subreddit: ansible
+              show-thumbnails: true
         - type: videos
           channels:
             - UCmaqnBHJZB2UI-i07mmz0kw # Tulok and Mango
@@ -118,10 +124,10 @@
               color: 200 50 50
               links:
                 - title: pihole
-                  url: http://pihole.home
+                  url: http://pihole.home/admin/index.php
                 - title: search
                   url: http://search.porcupine-coho.ts.net
-                - title: compose
+                - title: kompose
                   url: https://kompose.porcupine-coho.ts.net
                 - title: fs
                   url: https://fs.porcupine-coho.ts.net
