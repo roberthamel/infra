@@ -60,10 +60,10 @@
               subreddit: onebag
               show-thumbnails: true
             - type: reddit
-              subreddit: usefulscripts
+              subreddit: law
               show-thumbnails: true
             - type: reddit
-              subreddit: ansible
+              subreddit: ollama
               show-thumbnails: true
         - type: videos
           channels:
@@ -80,7 +80,7 @@
               subreddit: selfhosted
               show-thumbnails: true
             - type: reddit
-              subreddit: golang
+              subreddit: Global_News_Hub
               show-thumbnails: true
             - type: reddit
               subreddit: ollama
