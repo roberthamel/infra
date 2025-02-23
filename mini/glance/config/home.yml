@@ -120,6 +120,8 @@
                   url: https://photos.rhcloud.dev
                 - title: movies.rhcloud.dev
                   url: https://movies.rhcloud.dev
+                - title: books.rhcloud.dev
+                  url: https://books.rhcloud.dev
                 - title: mermaid.rhcloud.dev
                   url: https://mermaid.rhcloud.dev
                 - title: music.rhcloud.dev

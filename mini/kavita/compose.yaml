@@ -1,0 +1,19 @@
+services:
+  kavita:
+    image: lscr.io/linuxserver/kavita:latest
+    container_name: kavita
+    environment:
+      - PUID=${PUID?fail}
+      - PGID=${PGID?fail}
+      - TZ=America/New_York
+    volumes:
+      - ${SERVER_DATA_LOCATION?fail}/kavita/appdata/config:/config
+      - ${KAVITA_BOOK_PATH?fail}:/data
+    ports:
+      - 5555:5000
+    restart: always
+    networks:
+      - mini
+networks:
+  mini:
+    external: true
