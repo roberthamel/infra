@@ -1,0 +1,21 @@
+services:
+  glance:
+    container_name: glance
+    image: glanceapp/glance
+    volumes:
+      - ./config:/app/config
+      - ./assets:/app/assets
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - MY_SECRET_TOKEN=${GLANCE_SECRET_TOKEN?fail}
+    ports:
+      - 8080:8080
+    networks:
+      - mini
+    restart: unless-stopped
+    labels:
+      - tsdproxy.enable=true
+      - tsdproxy.name=glance
+networks:
+  mini:
+    external: true
