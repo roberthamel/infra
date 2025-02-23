@@ -33,6 +33,8 @@
           feeds:
             - url: https://selfh.st/rss/
               title: selfh.st
+            - url: https://www.glukhov.org/index.xml
+              title: glukhov.org
             - url: https://ciechanow.ski/atom.xml
             - url: https://www.joshwcomeau.com/rss.xml
               title: Josh Comeau
@@ -46,42 +48,38 @@
             - type: reddit
               subreddit: news
               show-thumbnails: true
-            - type: hacker-news
-              limit: 50
-              collapse-after: 5
-            - type: lobsters
-              limit: 50
-              collapse-after: 5
-              sort-by: hot
+              collapse-after: 3
+            - type: reddit
+              subreddit: Global_News_Hub
+              show-thumbnails: true
+              collapse-after: 3
+            - type: reddit
+              subreddit: worldnews
+              show-thumbnails: true
+              collapse-after: 3
+            - type: reddit
+              subreddit: law
+              show-thumbnails: true
+              collapse-after: 3
+
+        - type: group
+          widgets:
+            - type: reddit
+              subreddit: selfhosted
+              show-thumbnails: true
+            - type: reddit
+              subreddit: technology
+              show-thumbnails: true
             - type: reddit
               subreddit: minimalism
               show-thumbnails: true
             - type: reddit
               subreddit: onebag
               show-thumbnails: true
-            - type: reddit
-              subreddit: law
-              show-thumbnails: true
-            - type: reddit
-              subreddit: ollama
-              show-thumbnails: true
-        - type: videos
-          channels:
-            - UCmaqnBHJZB2UI-i07mmz0kw # Tulok and Mango
-            - UCwWhs_6x42TyRM4Wstoq8HA # The Daily Show
-            - UC3XTzVzaHQEd30rQbuvCtTQ # Last Week Tonight
-            - UCy6kyFxaMqGtpE3pQTflK8A # Real Time with Bill Maher
         - type: group
           widgets:
-            - type: reddit
-              subreddit: technology
-              show-thumbnails: true
-            - type: reddit
-              subreddit: selfhosted
-              show-thumbnails: true
-            - type: reddit
-              subreddit: Global_News_Hub
-              show-thumbnails: true
+            - type: hacker-news
+              limit: 50
             - type: reddit
               subreddit: ollama
               show-thumbnails: true
@@ -91,6 +89,10 @@
             - type: reddit
               subreddit: ChatGPTCoding
               show-thumbnails: true
+            - type: lobsters
+              limit: 50
+              sort-by: hot
+
     - size: small
       widgets:
         - type: weather
@@ -123,6 +125,8 @@
             - title: ts
               color: 200 50 50
               links:
+                - title: perplexica
+                  url: http://gti.home:3000
                 - title: pihole
                   url: http://pihole.home/admin/index.php
                 - title: search
@@ -131,3 +135,9 @@
                   url: https://kompose.porcupine-coho.ts.net
                 - title: fs
                   url: https://fs.porcupine-coho.ts.net
+        - type: videos
+          channels:
+            - UCmaqnBHJZB2UI-i07mmz0kw # Tulok and Mango
+            - UCwWhs_6x42TyRM4Wstoq8HA # The Daily Show
+            - UC3XTzVzaHQEd30rQbuvCtTQ # Last Week Tonight
+            - UCy6kyFxaMqGtpE3pQTflK8A # Real Time with Bill Maher
