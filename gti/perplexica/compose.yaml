@@ -7,7 +7,12 @@ services:
       - 4000:8080
     networks:
       - perplexica-network
-    restart: unless-stopped
+    restart: always
+    healthcheck:
+      test: ["CMD", "/bin/sh", "-c", "wget --spider --no-verbose --tries=1 http://searxng:8080/healthz"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
   perplexica-backend:
     build:
@@ -17,7 +22,8 @@ services:
     environment:
       - SEARXNG_API_URL=http://searxng:8080
     depends_on:
-      - searxng
+      searxng:
+        condition: service_healthy
     ports:
       - 3001:3001
     volumes:
@@ -28,7 +34,12 @@ services:
       - 'host.docker.internal:host-gateway'
     networks:
       - perplexica-network
-    restart: unless-stopped
+    restart: always
+    healthcheck:
+      test: ["CMD", "/bin/sh", "-c", "wget --spider --no-verbose --tries=1 http://localhost:3001/api"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
   perplexica-frontend:
     build:
@@ -39,15 +50,21 @@ services:
         - NEXT_PUBLIC_WS_URL=ws://${PERPLEXICA_BACKEND_IP?fail}:3001
     image: itzcrazykns1337/perplexica-frontend:main
     depends_on:
-      - perplexica-backend
+      perplexica-backend:
+        condition: service_healthy
     ports:
       - 3000:3000
     networks:
       - perplexica-network
-    restart: unless-stopped
+    restart: always
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=perplexica
+    healthcheck:
+      test: ["CMD", "/bin/sh", "-c", "wget --spider --no-verbose --tries=1 http://localhost:3000/"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
 networks:
   perplexica-network:
