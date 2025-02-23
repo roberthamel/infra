@@ -5,7 +5,6 @@ services:
     volumes:
       - ./config:/app/config
       - ./assets:/app/assets
-      - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       - MY_SECRET_TOKEN=${GLANCE_SECRET_TOKEN?fail}
     ports:
@@ -13,6 +12,8 @@ services:
     networks:
       - mini
     restart: unless-stopped
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=glance

@@ -1,12 +1,31 @@
 - name: Home
   # Optionally, if you only have a single page you can hide the desktop navigation for a cleaner look
-  # hide-desktop-navigation: true
+  hide-desktop-navigation: true
   columns:
     - size: small
       widgets:
+        - type: search
+          search-engine: google
+          bangs:
+            - title: searxng
+              shortcut: "!x"
+              url: https://search.porcupine-coho.ts.net/search?q={QUERY}
+            - title: YouTube
+              shortcut: "!yt"
+              url: https://www.youtube.com/results?search_query={QUERY}
         - type: calendar
-          first-day-of-week: monday
-
+          first-day-of-week: sunday
+        - type: clock
+          hour-format: 12h
+          timezones:
+            - timezone: Asia/Taipei
+              label: Taipei
+            - timezone: America/Chicago
+              label: Austin
+            - timezone: Europe/London
+              label: London
+            - timezone: Europe/Berlin
+              label: Berlin
         - type: rss
           limit: 10
           collapse-after: 3
@@ -20,31 +39,32 @@
             - url: https://samwho.dev/rss.xml
             - url: https://ishadeed.com/feed.xml
               title: Ahmad Shadeed
-
-        - type: twitch-channels
-          channels:
-            - theprimeagen
-            - j_blow
-            - piratesoftware
-            - cohhcarnage
-            - christitustech
-            - EJ_SA
-
     - size: full
       widgets:
         - type: group
           widgets:
+            - type: reddit
+              subreddit: news
+              show-thumbnails: true
             - type: hacker-news
+              limit: 50
+              collapse-after: 5
             - type: lobsters
-
+              limit: 50
+              collapse-after: 5
+              sort-by: hot
+            - type: reddit
+              subreddit: minimalism
+              show-thumbnails: true
+            - type: reddit
+              subreddit: onebag
+              show-thumbnails: true
         - type: videos
           channels:
-            - UCXuqSBlHAE6Xw-yeJA0Tunw # Linus Tech Tips
-            - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
-            - UCsBjURrPoezykLs9EqgamOA # Fireship
-            - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
-            - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
-
+            - UCmaqnBHJZB2UI-i07mmz0kw # Tulok and Mango
+            - UCwWhs_6x42TyRM4Wstoq8HA # The Daily Show
+            - UC3XTzVzaHQEd30rQbuvCtTQ # Last Week Tonight
+            - UCy6kyFxaMqGtpE3pQTflK8A # Real Time with Bill Maher
         - type: group
           widgets:
             - type: reddit
@@ -53,39 +73,55 @@
             - type: reddit
               subreddit: selfhosted
               show-thumbnails: true
-
+            - type: reddit
+              subreddit: golang
+              show-thumbnails: true
+            - type: reddit
+              subreddit: ollama
+              show-thumbnails: true
+            - type: reddit
+              subreddit: mcp
+              show-thumbnails: true
+            - type: reddit
+              subreddit: ChatGPTCoding
+              show-thumbnails: true
     - size: small
       widgets:
         - type: weather
-          location: London, United Kingdom
-          units: metric # alternatively "imperial"
-          hour-format: 12h # alternatively "24h"
-          # Optionally hide the location from being displayed in the widget
-          # hide-location: true
-
-        - type: markets
-          # The link to go to when clicking on the symbol in the UI,
-          # {SYMBOL} will be substituded with the symbol for each market
-          symbol-link-template: https://www.tradingview.com/symbols/{SYMBOL}/news
-          markets:
-            - symbol: SPY
-              name: S&P 500
-            - symbol: BTC-USD
-              name: Bitcoin
-            - symbol: NVDA
-              name: NVIDIA
-            - symbol: AAPL
-              name: Apple
-            - symbol: MSFT
-              name: Microsoft
-
-        - type: releases
-          cache: 1d
-          # Without authentication the Github API allows for up to 60 requests per hour. You can create a
-          # read-only token from your Github account settings and use it here to increase the limit.
-          # token: ...
-          repositories:
-            - glanceapp/glance
-            - go-gitea/gitea
-            - immich-app/immich
-            - syncthing/syncthing
+          location: New York, New York, United States
+          units: imperial
+          hour-format: 12h
+        - type: bookmarks
+          groups:
+            - title: rhcloud
+              color: 10 70 50
+              links:
+                - title: ai.rhcloud.dev
+                  url: https://ai.rhcloud.dev
+                - title: git.rhcloud.dev
+                  url: https://git.rhcloud.dev
+                - title: gist.rhcloud.dev
+                  url: https://gist.rhcloud.dev
+                - title: docmost.rhcloud.dev
+                  url: https://docmost.rhcloud.dev
+                - title: tools.rhcloud.dev
+                  url: https://tools.rhcloud.dev
+                - title: hoarder.rhcloud.dev
+                  url: https://hoarder.rhcloud.dev
+                - title: photos.rhcloud.dev
+                  url: https://photos.rhcloud.dev
+                - title: mermaid.rhcloud.dev
+                  url: https://mermaid.rhcloud.dev
+                - title: music.rhcloud.dev
+                  url: https://music.rhcloud.dev
+            - title: ts
+              color: 200 50 50
+              links:
+                - title: pihole
+                  url: http://pihole.home
+                - title: search
+                  url: http://search.porcupine-coho.ts.net
+                - title: compose
+                  url: https://kompose.porcupine-coho.ts.net
+                - title: fs
+                  url: https://fs.porcupine-coho.ts.net
