@@ -34,4 +34,4 @@ kill: ## stop a specific container (make kill c=gitea)
 	@docker compose -p $(c) -f $(c)/compose.yaml down
 
 start: ## launch a specific container (make start c=gitea)
-	@docker compose -p $(c) -f $(c)/compose.yaml up -d --remove-orphans --force-recreate
+	@docker compose -p $(c) -f $(c)/compose.yaml up -d --remove-orphans --force-recreate --build
