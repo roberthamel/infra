@@ -18,14 +18,14 @@
         - type: clock
           hour-format: 12h
           timezones:
-            - timezone: Asia/Taipei
-              label: Taipei
             - timezone: America/Chicago
               label: Austin
             - timezone: Europe/London
               label: London
             - timezone: Europe/Berlin
               label: Berlin
+            - timezone: Asia/Taipei
+              label: Taipei
         - type: rss
           limit: 10
           collapse-after: 3
@@ -118,6 +118,8 @@
                   url: https://hoarder.rhcloud.dev
                 - title: photos.rhcloud.dev
                   url: https://photos.rhcloud.dev
+                - title: movies.rhcloud.dev
+                  url: https://movies.rhcloud.dev
                 - title: mermaid.rhcloud.dev
                   url: https://mermaid.rhcloud.dev
                 - title: music.rhcloud.dev
