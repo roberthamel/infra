@@ -8,6 +8,3 @@
 [submodule "rhms/cursorlens/cursorlens"]
 	path = rhms/cursorlens/cursorlens
 	url = https://github.com/hamedmp/cursorlens
-[submodule "mini/perplexica/Perplexica"]
-	path = mini/perplexica/Perplexica
-	url = git@github.com:ItzCrazyKns/Perplexica.git
