@@ -7,6 +7,8 @@ services:
       - 4000:8080
     networks:
       - perplexica-network
+    labels:
+      - autoheal=true
     restart: always
     healthcheck:
       test: ["CMD", "/bin/sh", "-c", "wget --spider --no-verbose --tries=1 http://searxng:8080/healthz"]
@@ -34,6 +36,8 @@ services:
       - 'host.docker.internal:host-gateway'
     networks:
       - perplexica-network
+    labels:
+      - autoheal=true
     restart: always
     healthcheck:
       test: ["CMD", "/bin/sh", "-c", "wget --spider --no-verbose --tries=1 http://localhost:3001/api"]
@@ -60,11 +64,21 @@ services:
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=perplexica
+      - autoheal=true
     healthcheck:
       test: ["CMD", "/bin/sh", "-c", "wget --spider --no-verbose --tries=1 http://localhost:3000/"]
       interval: 10s
       timeout: 10s
       retries: 3
+
+  autoheal:
+    image: willfarrell/autoheal:latest
+    container_name: autoheal
+    restart: unless-stopped
+    environment:
+    - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   perplexica-network:
