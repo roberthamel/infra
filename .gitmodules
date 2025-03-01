@@ -4,3 +4,6 @@
 [submodule "gti/perplexica/Perplexica"]
 	path = gti/perplexica/Perplexica
 	url = https://github.com/ItzCrazyKns/Perplexica.git
+[submodule "mini/transmission/nordvpn"]
+	path = mini/transmission/nordvpn
+	url = https://github.com/bubuntux/nordvpn
