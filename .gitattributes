@@ -4,7 +4,6 @@ msi/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
 gti/tsdproxy/config/tsdproxy.yaml filter=git-crypt diff=git-crypt
 mini/mermaid/Caddyfile filter=git-crypt diff=git-crypt
 rhms/bolt/Caddyfile filter=git-crypt diff=git-crypt
-gti/openwebui/searxng/settings.yml filter=git-crypt diff=git-crypt
+gti/openwebui/searxng/settings.yml* filter=git-crypt diff=git-crypt
 gti/azuracast/.env filter=git-crypt diff=git-crypt
 gti/azuracast/azuracast.env filter=git-crypt diff=git-crypt
-gti/openwebui/searxng/settings.yml.new
