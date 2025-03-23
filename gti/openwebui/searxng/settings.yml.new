@@ -95,7 +95,7 @@ server:
   # If your instance owns a /etc/searxng/settings.yml file, then set the following
   # values there.
 
-  secret_key: "fdd09a76605bd7b4c3359cc7e8f89751942133f9973a206854e30e29786e4083"  # Is overwritten by ${SEARXNG_SECRET}
+  secret_key: "f136604f2674e6967e8f3f0dcd9995f8605e10fcf36418477e687aefd62db94c"  # Is overwritten by ${SEARXNG_SECRET}
   # Proxy image results through SearXNG. Is overwritten by ${SEARXNG_IMAGE_PROXY}
   image_proxy: false
   # 1.0 and 1.1 are supported
@@ -352,6 +352,11 @@ engines:
     shortcut: 9g
     disabled: true
 
+  - name: acfun
+    engine: acfun
+    shortcut: acf
+    disabled: true
+
   - name: adobe stock
     engine: adobe_stock
     shortcut: asi
@@ -496,6 +501,27 @@ engines:
     shortcut: bc
     categories: music
 
+  - name: baidu
+    baidu_category: general
+    categories: [general]
+    engine: baidu
+    shortcut: bd
+    disabled: true
+
+  - name: baidu images
+    baidu_category: images
+    categories: [images]
+    engine: baidu
+    shortcut: bdi
+    disabled: true
+
+  - name: baidu kaifa
+    baidu_category: it
+    categories: [it]
+    engine: baidu
+    shortcut: bdk
+    disabled: true
+
   - name: wikipedia
     engine: wikipedia
     shortcut: wp
@@ -572,6 +598,24 @@ engines:
     shortcut: chef
     # to show premium or plus results too:
     # skip_premium: false
+
+  - name: chinaso news
+    chinaso_category: news
+    engine: chinaso
+    shortcut: chinaso
+    disabled: true
+
+  - name: chinaso images
+    chinaso_category: images
+    engine: chinaso
+    shortcut: chinasoi
+    disabled: true
+
+  - name: chinaso videos
+    chinaso_category: videos
+    engine: chinaso
+    shortcut: chinasov
+    disabled: true
 
   - name: cloudflareai
     engine: cloudflareai
@@ -745,17 +789,18 @@ engines:
       results: HTML
 
   # - name: elasticsearch
-  #   shortcut: es
+  #   shortcut: els
   #   engine: elasticsearch
   #   base_url: http://localhost:9200
   #   username: elastic
   #   password: changeme
   #   index: my-index
+  #   enable_http: true
   #   # available options: match, simple_query_string, term, terms, custom
   #   query_type: match
   #   # if query_type is set to custom, provide your query here
-  #   #custom_query_json: {"query":{"match_all": {}}}
-  #   #show_metadata: false
+  #   # custom_query_json: {"query":{"match_all": {}}}
+  #   # show_metadata: false
   #   disabled: true
 
   - name: wikidata
@@ -1098,6 +1143,11 @@ engines:
   - name: ipernity
     engine: ipernity
     shortcut: ip
+    disabled: true
+
+  - name: iqiyi
+    engine: iqiyi
+    shortcut: iq
     disabled: true
 
   - name: jisho
@@ -1707,6 +1757,12 @@ engines:
     about:
       website: https://searchmysite.net
 
+  - name: selfhst icons
+    engine: selfhst
+    shortcut: si
+    inactive: true
+    disabled: true
+
   - name: sepiasearch
     engine: sepiasearch
     shortcut: sep
@@ -1855,15 +1911,15 @@ engines:
   # For this demo of the sqlite engine download:
   #   https://liste.mediathekview.de/filmliste-v2.db.bz2
   # and unpack into searx/data/filmliste-v2.db
-  # Query to test: "!demo concert"
+  # Query to test: "!mediathekview concert"
   #
-  # - name: demo
+  # - name: mediathekview
   #   engine: sqlite
-  #   shortcut: demo
-  #   categories: general
-  #   result_template: default.html
+  #   shortcut: mediathekview
+  #   categories: [general, videos]
+  #   result_type: MainResult
   #   database: searx/data/filmliste-v2.db
-  #   query_str:  >-
+  #   query_str: >-
   #     SELECT title || ' (' || time(duration, 'unixepoch') || ')' AS title,
   #            COALESCE( NULLIF(url_video_hd,''), NULLIF(url_video_sd,''), url_video) AS url,
   #            description AS content

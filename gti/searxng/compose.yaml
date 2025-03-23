@@ -45,11 +45,18 @@ services:
       retries: 5
     image: docker.io/searxng/searxng:latest
     volumes:
+      - ./config/limiter.toml:/etc/searxng/limiter.toml
+      - ./config/settings.yml:/etc/searxng/settings.yml
       - searxng-data:/etc/searxng:rw
     environment:
       - SEARXNG_BASE_URL=http://searxng:8080/
       - UWSGI_WORKERS=${SEARXNG_UWSGI_WORKERS:-4}
       - UWSGI_THREADS=${SEARXNG_UWSGI_THREADS:-4}
+      - ENABLE_RAG_WEB_SEARCH=True
+      - RAG_WEB_SEARCH_ENGINE=searxng
+      - RAG_WEB_SEARCH_RESULT_COUNT=3
+      - RAG_WEB_SEARCH_CONCURRENT_REQUESTS=10
+      - SEARXNG_QUERY_URL=http://searxng:8080/search?q=<query>
     cap_drop:
       - ALL
     cap_add:

@@ -1,84 +1,35 @@
 services:
   searxng:
     image: docker.io/searxng/searxng:latest
+    container_name: perplexica-searxng
     volumes:
       - ./Perplexica/searxng:/etc/searxng:rw
     ports:
       - 4000:8080
     networks:
       - perplexica-network
-    labels:
-      - autoheal=true
-    restart: always
-    healthcheck:
-      test: ["CMD", "/bin/sh", "-c", "wget --spider --no-verbose --tries=1 http://searxng:8080/healthz"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
+    restart: unless-stopped
 
-  perplexica-backend:
-    build:
-      context: Perplexica
-      dockerfile: backend.dockerfile
-    image: itzcrazykns1337/perplexica-backend:main
-    environment:
-      - SEARXNG_API_URL=http://searxng:8080
-    depends_on:
-      searxng:
-        condition: service_healthy
-    ports:
-      - 3001:3001
-    volumes:
-      - backend-dbstore:/home/perplexica/data
-      - uploads:/home/perplexica/uploads
-      - ./config.toml:/home/perplexica/config.toml
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
-    networks:
-      - perplexica-network
-    labels:
-      - autoheal=true
-    restart: always
-    healthcheck:
-      test: ["CMD", "/bin/sh", "-c", "wget --spider --no-verbose --tries=1 http://localhost:3001/api"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
-
-  perplexica-frontend:
+  app:
+    image: itzcrazykns1337/perplexica:main
+    container_name: perplexica-app
     build:
       context: Perplexica
       dockerfile: app.dockerfile
-      args:
-        - NEXT_PUBLIC_API_URL=http://${PERPLEXICA_BACKEND_IP?fail}:3001/api
-        - NEXT_PUBLIC_WS_URL=ws://${PERPLEXICA_BACKEND_IP?fail}:3001
-    image: itzcrazykns1337/perplexica-frontend:main
-    depends_on:
-      perplexica-backend:
-        condition: service_healthy
+    environment:
+      - SEARXNG_API_URL=http://perplexica-searxng:8080
     ports:
       - 3000:3000
     networks:
       - perplexica-network
-    restart: always
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=perplexica
-      - autoheal=true
-    healthcheck:
-      test: ["CMD", "/bin/sh", "-c", "wget --spider --no-verbose --tries=1 http://localhost:3000/"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
-
-  autoheal:
-    image: willfarrell/autoheal:latest
-    container_name: autoheal
-    restart: unless-stopped
-    environment:
-    - AUTOHEAL_CONTAINER_LABEL=all
     volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
+      - backend-dbstore:/home/perplexica/data
+      - uploads:/home/perplexica/uploads
+      - ./config.toml:/home/perplexica/config.toml
+    restart: unless-stopped
 
 networks:
   perplexica-network:
