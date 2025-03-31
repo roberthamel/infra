@@ -13,6 +13,18 @@ services:
     environment:
       - OLLAMA_BASE_URL=${GTI_OLLAMA_BASE_URL?fail}
       - WEBUI_SECRET_KEY=${OPENWEBUI_API_KEY?fail}
+      - ENABLE_CODE_INTERPRETER=${ENABLE_CODE_INTERPRETER?fail}
+      - CODE_EXECUTION_ENGINE=${CODE_EXECUTION_ENGINE?fail}
+      - CODE_EXECUTION_JUPYTER_URL=${CODE_EXECUTION_JUPYTER_URL?fail}
+      - CODE_EXECUTION_JUPYTER_AUTH=${CODE_EXECUTION_JUPYTER_AUTH?fail}
+      - CODE_EXECUTION_JUPYTER_TOKEN=${CODE_EXECUTION_JUPYTER_TOKEN?fail}
+      - CODE_EXECUTION_JUPYTER_TIMEOUT=${CODE_EXECUTION_JUPYTER_TIMEOUT?fail}
+      - CODE_INTERPRETER_ENGINE=${CODE_INTERPRETER_ENGINE?fail}
+      - CODE_INTERPRETER_JUPYTER_URL=${CODE_INTERPRETER_JUPYTER_URL?fail}
+      - CODE_INTERPRETER_JUPYTER_AUTH=${CODE_INTERPRETER_JUPYTER_AUTH?fail}
+      - CODE_INTERPRETER_JUPYTER_TOKEN=${CODE_INTERPRETER_JUPYTER_TOKEN?fail}
+      - CODE_INTERPRETER_JUPYTER_TIMEOUT=${CODE_INTERPRETER_JUPYTER_TIMEOUT?fail}
+
   webui-searxng-redis:
     container_name: webui-searxng-redis
     image: docker.io/valkey/valkey:8-alpine
@@ -33,6 +45,7 @@ services:
       options:
         max-size: "1m"
         max-file: "1"
+
   webui-searxng:
     container_name: webui-searxng
     image: docker.io/searxng/searxng:latest
@@ -59,9 +72,29 @@ services:
       options:
         max-size: "1m"
         max-file: "1"
+
+  jupyter:
+    image: jupyter/minimal-notebook:latest
+    container_name: jupyter-notebook
+    ports:
+    - "18888:8888"
+    volumes:
+    - jupyter_data:/home/jovyan/work
+    environment:
+    - JUPYTER_ENABLE_LAB=yes
+    - JUPYTER_TOKEN=123456
+    networks:
+      - webui
+      - gti
+    labels:
+      - tsdproxy.enable=true
+      - tsdproxy.name=jupyter
+
 volumes:
   open-webui-data:
   valkey-data2:
+  jupyter_data:
+
 networks:
   gti:
     external: true
