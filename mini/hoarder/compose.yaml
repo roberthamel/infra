@@ -15,9 +15,10 @@ services:
       NEXTAUTH_SECRET: ${HOARDER_NEXTAUTH_SECRET?Variable not set}
       DATA_DIR: /data
       DISABLE_SIGNUPS: "true"
-      OLLAMA_BASE_URL: "http://rhms.home:11434"
-      INFERENCE_TEXT_MODEL: "qwen2.5:32b"
-      INFERENCE_IMAGE_MODEL: "llama3.2-vision:90b"
+      OLLAMA_BASE_URL: ${GTI_OLLAMA_BASE_URL?fail}
+      INFERENCE_TEXT_MODEL: ${GTI_INFERENCE_TEXT_MODEL?fail}
+      INFERENCE_IMAGE_MODEL: ${GTI_INFERENCE_IMAGE_MODEL?fail}
+      EMBEDDING_TEXT_MODEL: ${GTI_EMBEDDING_TEXT_MODEL?fail}
     networks:
       - mini
       - hoarder
@@ -38,8 +39,6 @@ services:
     image: getmeili/meilisearch:v1.11.1
     container_name: meilisearch
     restart: always
-    expose:
-      - 7700
     environment:
       MEILI_MASTER_KEY: ${HOARDER_MEILI_MASTER_KEY?Variable not set}
       MEILI_NO_ANALYTICS: "true"

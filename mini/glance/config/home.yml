@@ -129,10 +129,7 @@
             - title: ts
               color: 200 50 50
               links:
-                - title: perplexica
-                  url: http://gti.home:3000
-                - title: pihole
-                  url: http://pihole.home/admin/index.php
+                  url: http://pihole/admin/index.php
                 - title: search
                   url: http://search.porcupine-coho.ts.net
                 - title: kompose
