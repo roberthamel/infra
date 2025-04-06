@@ -129,7 +129,6 @@
             - title: ts
               color: 200 50 50
               links:
-                  url: http://pihole/admin/index.php
                 - title: search
                   url: http://search.porcupine-coho.ts.net
                 - title: kompose
