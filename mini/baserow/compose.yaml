@@ -1,0 +1,20 @@
+services:
+  baserow:
+    container_name: baserow
+    image: baserow/baserow:latest
+    environment:
+      BASEROW_PUBLIC_URL: ${BASEROW_PUBLIC_URL?fail}
+    ports:
+      - "38380:80"
+      - "443/tcp"
+    volumes:
+      - baserow_data:/baserow/data
+    networks:
+      - mini
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+volumes:
+  baserow_data:
+networks:
+  mini:
+    external: true
