@@ -27,7 +27,7 @@ services:
     hostname: searxng
     container_name: searxng
     ports:
-      - "8080:8080"
+      - "8080/tcp"
     depends_on:
       searxng-redis:
         condition: service_healthy
