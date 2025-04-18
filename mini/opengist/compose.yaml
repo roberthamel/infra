@@ -3,9 +3,9 @@ services:
     image: ghcr.io/thomiceli/opengist:1
     container_name: opengist
     restart: always
-    userns: host
+    #userns: host
     privileged: true
-    user: opengist
+    # user: opengist
     ports:
       - "6157:6157"
     volumes:
@@ -16,7 +16,7 @@ services:
     environment:
       - OG_SSH_GIT_ENABLED=false
       - OG_EXTERNAL_URL=${OPENGIST_EXTERNAL_URL:-?fail}
-      - USER=opengist
+      # - USER=opengist
     networks:
       - mini
     healthcheck:
