@@ -17,6 +17,7 @@ services:
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=glance
+      - com.centurylinklabs.watchtower.enable=true
 networks:
   mini:
     external: true

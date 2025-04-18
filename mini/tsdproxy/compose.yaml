@@ -13,6 +13,8 @@ services:
       - "8888:8080"
     networks:
       - mini
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 networks:
   mini:
     external: true

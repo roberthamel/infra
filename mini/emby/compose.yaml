@@ -25,3 +25,5 @@ services:
       - ${SERVER_DATA_LOCATION?fail}/emby:/config
       - ${EMBY_MOVIE_PATH?fail}:/mnt/share1
       - ${EMBY_DOWNLOAD_MOVIE_PATH?fail}:/mnt/share2
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"

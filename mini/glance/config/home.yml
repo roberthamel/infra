@@ -129,6 +129,10 @@
             - title: ts
               color: 200 50 50
               links:
+                - title: n8n
+                  url: http://192.168.1.205:5678
+                - title: duplicati
+                  url: https://duplicati.porcupine-coho.ts.net
                 - title: search
                   url: http://search.porcupine-coho.ts.net
                 - title: kompose
@@ -137,7 +141,6 @@
                   url: https://fs.porcupine-coho.ts.net
         - type: videos
           channels:
-            - UCmaqnBHJZB2UI-i07mmz0kw # Tulok and Mango
             - UCwWhs_6x42TyRM4Wstoq8HA # The Daily Show
             - UC3XTzVzaHQEd30rQbuvCtTQ # Last Week Tonight
             - UCy6kyFxaMqGtpE3pQTflK8A # Real Time with Bill Maher

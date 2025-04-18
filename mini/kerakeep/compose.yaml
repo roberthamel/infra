@@ -1,18 +1,18 @@
 services:
   web:
-    image: ghcr.io/hoarder-app/hoarder:${HOARDER_VERSION?fail}
-    container_name: hoarder
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
+    container_name: kerakeep
     restart: always
     volumes:
-      - $SERVER_DATA_LOCATION/hoarder/data:/data
+      - $SERVER_DATA_LOCATION/kerakeep/data:/data
     ports:
      - 13000:3000
     environment:
       MEILI_ADDR: http://meilisearch:7700
       BROWSER_WEB_URL: http://chrome:9222
-      MEILI_MASTER_KEY: ${HOARDER_MEILI_MASTER_KEY?Variable not set}
-      NEXTAUTH_URL: ${HOARDER_NEXTAUTH_URL?Variable not set}
-      NEXTAUTH_SECRET: ${HOARDER_NEXTAUTH_SECRET?Variable not set}
+      MEILI_MASTER_KEY: ${KERAKEEP_MEILI_MASTER_KEY?Variable not set}
+      NEXTAUTH_URL: ${KERAKEEP_NEXTAUTH_URL?Variable not set}
+      NEXTAUTH_SECRET: ${KERAKEEP_NEXTAUTH_SECRET?Variable not set}
       DATA_DIR: /data
       DISABLE_SIGNUPS: "true"
       OLLAMA_BASE_URL: ${GTI_OLLAMA_BASE_URL?fail}
@@ -21,7 +21,9 @@ services:
       EMBEDDING_TEXT_MODEL: ${GTI_EMBEDDING_TEXT_MODEL?fail}
     networks:
       - mini
-      - hoarder
+      - kerakeep
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
     container_name: chrome
@@ -34,21 +36,25 @@ services:
       - --remote-debugging-port=9222
       - --hide-scrollbars
     networks:
-      - hoarder
+      - kerakeep
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
   meilisearch:
     image: getmeili/meilisearch:v1.11.1
     container_name: meilisearch
     restart: always
     environment:
-      MEILI_MASTER_KEY: ${HOARDER_MEILI_MASTER_KEY?Variable not set}
+      MEILI_MASTER_KEY: ${KERAKEEP_MEILI_MASTER_KEY?Variable not set}
       MEILI_NO_ANALYTICS: "true"
     volumes:
-      - $SERVER_DATA_LOCATION/hoarder/meilisearch:/meili_data
+      - $SERVER_DATA_LOCATION/kerakeep/meilisearch:/meili_data
     networks:
-      - hoarder
+      - kerakeep
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
 networks:
   mini:
     external: true
-  hoarder:
+  kerakeep:
     external: false

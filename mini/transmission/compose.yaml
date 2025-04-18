@@ -48,6 +48,8 @@ services:
       - $SERVER_DATA_LOCATION/transmission/downloads/:/downloads
       - $SERVER_DATA_LOCATION/transmission/config:/config
       - $SERVER_DATA_LOCATION/transmission/watch:/watch
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
 networks:
   mini:

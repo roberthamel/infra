@@ -16,6 +16,8 @@ services:
     volumes:
       - $SERVER_DATA_LOCATION/navidrome/data:/data
       - $NAVIDROME_MUSIC_DIR:/music:ro
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 networks:
   mini:
     external: true

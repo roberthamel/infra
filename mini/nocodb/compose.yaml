@@ -1,0 +1,45 @@
+services:
+  nocodb:
+    depends_on:
+      root_db:
+        condition: service_healthy
+    environment:
+      NC_DB: ${NOCODB_DB_URL?fail}
+    image: "nocodb/nocodb:latest"
+    container_name: nocodb
+    ports:
+      - "18185:8080"
+    restart: unless-stopped
+    volumes:
+      - "nc_data:/usr/app/data"
+    networks:
+      - mini
+      - nocodb
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  root_db:
+    environment:
+      POSTGRES_DB: ${NOCODB_DB_NAME?fail}
+      POSTGRES_PASSWORD: ${NOCODB_DB_PASSWORD?fail}
+      POSTGRES_USER: ${NOCODB_DB_USER?fail}
+    container_name: nocodb-pg
+    networks:
+      - nocodb
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""
+      timeout: 2s
+    image: postgres:16.6
+    restart: unless-stopped
+    volumes:
+      - "db_data:/var/lib/postgresql/data"
+volumes:
+  db_data: {}
+  nc_data: {}
+
+networks:
+  mini:
+    external: true
+  nocodb:
+    external: false
