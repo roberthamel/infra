@@ -1,0 +1,31 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    environment:
+      TZ: ${TIMEZONE?fail}
+      PIHOLE_DNS_: ${PIHOLE_DNS?fail}
+      DNSSEC: 'false'
+      VIRTUAL_HOST: 'pihole'
+      WEBTHEME: 'default-dark'
+      SKIPGRAVITYONBOOT: 'true'
+      WEBPASSWORD: ${PIHOLE_WEBPASSWORD?fail}
+      DNSMASQ_LISTENING: 'all'
+    volumes:
+      - pihole-etc:/etc/pihole
+      - pihole-dnsmasq:/etc/dnsmasq.d/
+    cap_add:
+      - NET_ADMIN
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "tsdproxy.enable=true"
+      - "tsdproxy.name=pihole"
+      - "tsdproxy.container_port=80"
+    restart: unless-stopped
+networks:
+  default:
+    external: true
+    name: gti
+volumes:
+  pihole-etc:
+  pihole-dnsmasq:
