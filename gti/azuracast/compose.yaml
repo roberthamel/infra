@@ -4,8 +4,10 @@ services:
         container_name: azuracast
         image: 'ghcr.io/azuracast/azuracast:${AZURACAST_VERSION:-latest}'
         labels:
-            - com.centurylinklabs.watchtower.scope=azuracast
-            - com.centurylinklabs.watchtower.enable=true
+            # - com.centurylinklabs.watchtower.enable=true
+            - tsdproxy.enable=true
+            - tsdproxy.name=radio
+            - tsdproxy.container_port=80
         ports:
             - '${AZURACAST_HTTP_PORT:-80}:${AZURACAST_HTTP_PORT:-80}'
             - '${AZURACAST_SFTP_PORT:-2022}:${AZURACAST_SFTP_PORT:-2022}'
