@@ -1,0 +1,31 @@
+services:
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    hostname: duplicati
+    environment:
+      - PUID=${DUPLICATI_PUID?fail}
+      - PGID=${DUPLICATI_PGID?fail}
+      - TZ=${TIMEZONE?fail}
+      - CLI_ARGS= #optional
+      - SETTINGS_ENCRYPTION_KEY=${DUPLICATI_SETTINGS_ENCRYPTION_KEY?fail}
+      - DUPLICATI__WEBSERVICE_PASSWORD=${DUPLICATI_WEBSERVICE_PASSWORD?fail}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "tsdproxy.enable=true"
+      - "tsdproxy.name=duplicati"
+      - "tsdproxy.container_port=8200"
+    ports:
+      - "8200/tcp"
+    volumes:
+      - config:/config
+      - /mnt/bkp:/backups
+      - /:/source
+    restart: unless-stopped
+volumes:
+  config:
+    driver: local
+networks:
+  default:
+    external: true
+    name: gti
