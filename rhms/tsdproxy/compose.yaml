@@ -1,0 +1,16 @@
+services:
+  tsdproxy:
+    image: almeidapaulopt/tsdproxy:latest
+    container_name: tsdproxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - tsdproxy_data:/data
+      - ./config:/config
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - TSNET_FORCE_LOGIN=1
+    restart: always
+    ports:
+      - "8080/tcp"
+volumes:
+  tsdproxy_data:

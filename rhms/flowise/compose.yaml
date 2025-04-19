@@ -1,0 +1,21 @@
+services:
+  flowise:
+    image: flowiseai/flowise
+    restart: unless-stopped
+    container_name: flowise
+    environment:
+      - PORT=3001
+    ports:
+      - "33001:3001"
+    volumes:
+      - flowise:/root/.flowise
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - rhms
+    entrypoint: /bin/sh -c "sleep 3; flowise start"
+volumes:
+  flowise:
+networks:
+  rhms:
+    external: true

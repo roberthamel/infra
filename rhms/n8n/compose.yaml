@@ -1,0 +1,103 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=n8n-postgres
+      - DB_POSTGRESDB_DATABASE=${N8N_POSTGRES_DATABASE?fail}
+      - DB_POSTGRESDB_USER=${N8N_POSTGRES_USER?fail}
+      - DB_POSTGRESDB_PASSWORD=${N8N_POSTGRES_PASSWORD?fail}
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_PERSONALIZATION_ENABLED=false
+      - N8N_ENCRYPTION_KEY
+      - N8N_USER_MANAGEMENT_JWT_SECRET
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    restart: unless-stopped
+    volumes:
+      - n8n_storage:/home/node/.n8n
+      - n8n_backup:/backup
+      - ${N8N_SHARED_VOLUME_PATH?fail}:/data/shared
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  qdrant:
+    image: qdrant/qdrant
+    container_name: n8n-qdrant
+    hostname: n8n-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333/tcp"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  postgres:
+    image: postgres:14
+    container_name: n8n-postgres
+    hostname: n8n-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${N8N_POSTGRES_DATABASE?fail}
+      POSTGRES_USER: ${N8N_POSTGRES_USER?fail}
+      POSTGRES_PASSWORD: ${N8N_POSTGRES_PASSWORD?fail}
+    volumes:
+      - n8n_postgres:/var/lib/postgresql/data
+    ports:
+      - "5432/tcp"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  redis:
+    container_name: n8n-redis
+    hostname: n8n-redis
+    image: docker.io/valkey/valkey:8-alpine
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: unless-stopped
+    volumes:
+      - valkey-data:/data
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+  searxng:
+    container_name: n8n-searxng
+    hostname: n8n-searxng
+    image: docker.io/searxng/searxng:latest
+    restart: unless-stopped
+    ports:
+      - "8080/tcp"
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME:-localhost}/
+      - UWSGI_WORKERS=${SEARXNG_UWSGI_WORKERS:-4}
+      - UWSGI_THREADS=${SEARXNG_UWSGI_THREADS:-4}
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+
+volumes:
+  n8n_storage:
+  n8n_backup:
+  n8n_postgres:
+  qdrant_storage:
+  valkey-data:
