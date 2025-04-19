@@ -126,12 +126,20 @@
                   url: https://mermaid.rhcloud.dev
                 - title: music.rhcloud.dev
                   url: https://music.rhcloud.dev
+                - title: baserow.rhcloud.dev
+                  url: https://baserow.rhcloud.dev
+                - title: n8n.rhcloud.dev
+                  url: https://n8n.rhcloud.dev
+                - title: dify.rhcloud.dev
+                  url: https://dify.rhcloud.dev
+                - title: nocodb.rhcloud.dev
+                  url: https://nocodb.rhcloud.dev
             - title: ts
               color: 200 50 50
               links:
-                - title: n8n
-                  url: http://192.168.1.205:5678
-                - title: duplicati
+                - title: relentless
+                  url: https://radio.porcupine-coho.ts.net/public/first
+                - title: gti duplicati
                   url: https://duplicati.porcupine-coho.ts.net
                 - title: search
                   url: http://search.porcupine-coho.ts.net
@@ -139,6 +147,10 @@
                   url: https://kompose.porcupine-coho.ts.net
                 - title: fs
                   url: https://fs.porcupine-coho.ts.net
+                - title: flowise
+                  url: http://rhms:33001
+                - title: stable diffusion
+                  url: http://rhms:7860
         - type: videos
           channels:
             - UCwWhs_6x42TyRM4Wstoq8HA # The Daily Show
