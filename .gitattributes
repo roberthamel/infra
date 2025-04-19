@@ -10,3 +10,4 @@ gti/azuracast/azuracast.env filter=git-crypt diff=git-crypt
 gti/openwebui/searxng/settings.yml* filter=git-crypt diff=git-crypt
 gti/searxng/config/settings.yml filter=git-crypt diff=git-crypt
 rhms/dify/.env* filter=git-crypt diff=git-crypt
+rhms/n8n/.env* filter=git-crypt diff=git-crypt
