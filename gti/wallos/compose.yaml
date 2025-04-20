@@ -1,0 +1,20 @@
+services:
+  wallos:
+    container_name: wallos
+    image: bellamy/wallos:latest
+    ports:
+      - "12985:80"
+    environment:
+      TZ: ${TIMEZONE?fail}
+    volumes:
+      - 'data:/var/www/html/db'
+    restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+    networks:
+      - gti
+networks:
+  gti:
+    external: true
+volumes:
+  data:

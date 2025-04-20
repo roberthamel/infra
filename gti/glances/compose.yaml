@@ -1,0 +1,32 @@
+services:
+  glances:
+    image: nicolargo/glances:latest
+    restart: always
+    pid: "host"
+    privileged: true
+    # network_mode: "host"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./glances.conf:/glances/conf/glances.conf"
+      - "/etc/os-release:/etc/os-release:ro"
+    environment:
+      - TZ=${TZ}
+      - GLANCES_OPT=-C /glances/conf/glances.conf -w
+    networks:
+      - gti
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    labels:
+      - tsdproxy.enable=true
+      - tsdproxy.name=glances-gti
+      - tsdproxy.container_port=61208
+      - com.centurylinklabs.watchtower.enable=true
+
+networks:
+  gti:
+    external: true
