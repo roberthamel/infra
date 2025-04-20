@@ -38,6 +38,8 @@ services:
       - redisdata:/data
     networks:
       - paperless
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
@@ -48,12 +50,12 @@ services:
       - gotenberg
       - tika
     ports:
-      - "40971:8000"
+      - "44701:8000"
     volumes:
-      - ${SERVER_DATA_LOCATION?fail}/paperless/ngx/data:/usr/src/paperless/data
-      - ${SERVER_DATA_LOCATION?fail}/paperless/ngx/media:/usr/src/paperless/media
-      - ${SERVER_DATA_LOCATION?fail}/paperless/ngx/export:/usr/src/paperless/export
-      - ${SERVER_DATA_LOCATION?fail}/paperless/ngx/consume:/usr/src/paperless/consume
+      - paperless_data:/usr/src/paperless/data
+      - paperless_media:/usr/src/paperless/media
+      - paperless_export:/usr/src/paperless/export
+      - paperless_consume:/usr/src/paperless/consume
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_TIKA_ENABLED: 1
@@ -63,10 +65,10 @@ services:
       PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY?fail}
       PAPERLESS_TIME_ZONE: ${PAPERLESS_TIME_ZONE?fail}
     networks:
-      - mini
+      - gti
       - paperless
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
   gotenberg:
     image: docker.io/gotenberg/gotenberg:8.19
@@ -87,22 +89,32 @@ services:
     restart: unless-stopped
     networks:
       - paperless
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
   paperless-ai:
     image: clusterzx/paperless-ai
     container_name: paperless-ai
     restart: unless-stopped
-    network_mode: host
     volumes:
-      - ${SERVER_DATA_LOCATION?fail}/paperless/ngx/data:/app/data
+      - paperless_ai:/app/data
+    ports:
+      - "${PAPERLESS_AI_PORT?fail}:${PAPERLESS_AI_PORT?fail}"
     environment:
       PAPERLESS_AI_PORT: ${PAPERLESS_AI_PORT?fail}
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
 volumes:
+  paperless_data:
+  paperless_media:
+  paperless_export:
+  paperless_consume:
+  paperless_ai:
   redisdata:
 
 networks:
-  mini:
+  gti:
     external: true
   paperless:
     external: false

@@ -8,16 +8,17 @@ services:
     environment:
       - MY_SECRET_TOKEN=${GLANCE_SECRET_TOKEN?fail}
     ports:
-      - 8080:8080
+      - "8080/tcp"
     networks:
-      - mini
+      - gti
     restart: unless-stopped
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     labels:
       - tsdproxy.enable=true
       - tsdproxy.name=glance
+      - tsdproxy.container_port=8080
       - com.centurylinklabs.watchtower.enable=true
 networks:
-  mini:
+  gti:
     external: true

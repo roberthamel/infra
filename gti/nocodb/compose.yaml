@@ -8,12 +8,12 @@ services:
     image: "nocodb/nocodb:latest"
     container_name: nocodb
     ports:
-      - "18185:8080"
+      - "24753:8080"
     restart: unless-stopped
     volumes:
       - "nc_data:/usr/app/data"
     networks:
-      - mini
+      - gti
       - nocodb
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
@@ -39,7 +39,7 @@ volumes:
   nc_data: {}
 
 networks:
-  mini:
+  gti:
     external: true
   nocodb:
     external: false

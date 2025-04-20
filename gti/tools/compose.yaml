@@ -6,9 +6,9 @@ services:
       - '8126:80'
     restart: always
     networks:
-      - mini
+      - gti
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
 networks:
-  mini:
+  gti:
     external: true
