@@ -41,7 +41,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
 
-  webserver:
+  paperless:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     container_name: paperless
     restart: unless-stopped
@@ -50,7 +50,7 @@ services:
       - gotenberg
       - tika
     ports:
-      - "44701:8000"
+      - "8000:8000"
     volumes:
       - paperless_data:/usr/src/paperless/data
       - paperless_media:/usr/src/paperless/media
@@ -64,11 +64,11 @@ services:
       PAPERLESS_URL: ${PAPERLESS_URL?fail}
       PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY?fail}
       PAPERLESS_TIME_ZONE: ${PAPERLESS_TIME_ZONE?fail}
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
     networks:
       - gti
       - paperless
-    labels:
-      - com.centurylinklabs.watchtower.enable=true
 
   gotenberg:
     image: docker.io/gotenberg/gotenberg:8.19
@@ -104,6 +104,9 @@ services:
       PAPERLESS_AI_PORT: ${PAPERLESS_AI_PORT?fail}
     labels:
       - com.centurylinklabs.watchtower.enable=true
+    networks:
+      - gti
+      - paperless
 
 volumes:
   paperless_data:
