@@ -1,0 +1,34 @@
+services:
+  anythingllm:
+    image: mintplexlabs/anythingllm
+    container_name: anythingllm
+    ports:
+    - "33065:3001"
+    cap_add:
+      - SYS_ADMIN
+    environment:
+      - STORAGE_DIR=/app/server/storage
+      - JWT_SECRET=${ANYTHINGLLM_JWT_SECRET?fail}
+      - LLM_PROVIDER=${ANYTHINGLLM_LLM_PROVIDER?fail}
+      - OLLAMA_BASE_PATH=${ANYTHINGLLM_OLLAMA_BASE_PATH?fail}
+      - OLLAMA_MODEL_PREF=${ANYTHINGLLM_OLLAMA_MODEL_PREF?fail}
+      - OLLAMA_MODEL_TOKEN_LIMIT=${ANYTHINGLLM_OLLAMA_MODEL_TOKEN_LIMIT?fail}
+      - EMBEDDING_ENGINE=${ANYTHINGLLM_EMBEDDING_ENGINE?fail}
+      - EMBEDDING_BASE_PATH=${ANYTHINGLLM_EMBEDDING_BASE_PATH?fail}
+      - EMBEDDING_MODEL_PREF=${ANYTHINGLLM_EMBEDDING_MODEL_PREF?fail}
+      - EMBEDDING_MODEL_MAX_CHUNK_LENGTH=${ANYTHINGLLM_EMBEDDING_MODEL_MAX_CHUNK_LENGTH?fail}
+      - VECTOR_DB=${ANYTHINGLLM_VECTOR_DB?fail}
+      - WHISPER_PROVIDER=${ANYTHINGLLM_WHISPER_PROVIDER?fail}
+      - TTS_PROVIDER=${ANYTHINGLLM_TTS_PROVIDER?fail}
+      - PASSWORDMINCHAR=${ANYTHINGLLM_PASSWORDMINCHAR?fail}
+    volumes:
+      - anythingllm_storage:/app/server/storage
+    restart: always
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - tsdproxy.enable=true
+      - tsdproxy.name=anythingllm
+      - tsdproxy.container_port=3001
+
+volumes:
+  anythingllm_storage:

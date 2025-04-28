@@ -10,6 +10,7 @@ services:
       - CLI_ARGS= #optional
       - SETTINGS_ENCRYPTION_KEY=${DUPLICATI_SETTINGS_ENCRYPTION_KEY?fail}
       - DUPLICATI__WEBSERVICE_PASSWORD=${DUPLICATI_WEBSERVICE_PASSWORD?fail}
+      - DOTNET_SYSTEM_IO_DISABLEFILELOCKING=true
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
       - "tsdproxy.enable=true"
