@@ -1,0 +1,17 @@
+services:
+  crawl4ai:
+    image: unclecode/crawl4ai:latest
+    container_name: crawl4ai
+    restart: unless-stopped
+    volumes:
+      - /dev/shm:/dev/shm
+    ports:
+      - "11235:11235"
+    user: "appuser"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
