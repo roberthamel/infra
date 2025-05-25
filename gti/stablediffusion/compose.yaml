@@ -1,0 +1,39 @@
+services:
+  stable-diffusion-webui:
+    image: universonic/stable-diffusion-webui:minimal
+    command: --no-half --no-half-vae --precision full --api
+    runtime: nvidia
+    restart: unless-stopped
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - tsdproxy.enable=true
+      - tsdproxy.name=imagegen
+    ports:
+      - "25153:8080/tcp"
+    volumes:
+      - stablediffusion:/app/stable-diffusion-webui
+      - ./models:/app/stable-diffusion-webui/models
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - "node.labels.iface != extern"
+      restart_policy:
+        condition: unless-stopped
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+volumes:
+  stablediffusion:
+
+networks:
+  gti:
+    external: true
+  stablediffusion:
+    external: false
