@@ -1,1 +1,3 @@
 *.ini
+settings.yml.new
+uwsgi.ini.new

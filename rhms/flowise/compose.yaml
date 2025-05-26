@@ -11,6 +11,8 @@ services:
       - flowise:/root/.flowise
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+      - "tsdproxy.enable=true"
+      - "tsdproxy.name=flowise"
     networks:
       - rhms
     entrypoint: /bin/sh -c "sleep 3; flowise start"
