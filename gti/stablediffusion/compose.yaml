@@ -1,6 +1,6 @@
 services:
   stable-diffusion-webui:
-    image: universonic/stable-diffusion-webui:minimal
+    image: universonic/stable-diffusion-webui:full
     command: --no-half --no-half-vae --precision full --api
     runtime: nvidia
     restart: unless-stopped
