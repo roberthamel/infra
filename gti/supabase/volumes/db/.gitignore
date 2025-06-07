@@ -1,0 +1,9 @@
+*
+!.gitignore
+!_supabase.sql
+!jwt.sql
+!logs.sql
+!pooler.sql
+!realtime.sql
+!roles.sql
+!webhooks.sql
