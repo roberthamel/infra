@@ -15,3 +15,4 @@ gti/glance/config/home.yml filter=git-crypt diff=git-crypt
 gti/komodo/compose.env filter=git-crypt diff=git-crypt
 gti/appflowy/.env* filter=git-crypt diff=git-crypt
 gti/supabase/.env* filter=git-crypt diff=git-crypt
+mini/immich/config/Settings.json filter=git-crypt diff=git-crypt

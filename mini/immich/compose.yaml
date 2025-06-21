@@ -89,6 +89,19 @@ services:
     restart: always
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
-
+  immichframe:
+    container_name: immichframe
+    image: ghcr.io/immichframe/immichframe:latest
+    restart: on-failure
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "tsdproxy.enable=true"
+      - "tsdproxy.name=frame"
+    volumes:
+      - ./config:/app/Config
+    ports:
+      - "2135:8080"
+    environment:
+      TZ: "America/New_York"
 volumes:
   model-cache:

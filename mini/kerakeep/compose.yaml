@@ -40,7 +40,7 @@ services:
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
   meilisearch:
-    image: getmeili/meilisearch:v1.11.1
+    image: getmeili/meilisearch:v1.13.3
     container_name: meilisearch
     restart: always
     environment:
