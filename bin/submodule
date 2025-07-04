@@ -31,9 +31,13 @@ case "$1" in
             echo "Error: Path is required for removing a submodule."
             usage
         fi
-        git submodule deinit -f -- "$2"
-        rm -rf ".git/modules/$2"
-        git rm -f "$2"
+        git submodule deinit -f -- "$2" 2>/dev/null || true
+        if [ -d "$2" ]; then
+            sudo chown -R "$USER:$USER" "$2" 2>/dev/null || true
+        fi
+        rm -rf "$2" 2>/dev/null || true
+        rm -rf ".git/modules/$2" 2>/dev/null || true
+        git rm -f "$2" 2>/dev/null || true
         ;;
     *)
         echo "Invalid command: $1"
