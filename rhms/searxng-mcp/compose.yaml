@@ -1,0 +1,26 @@
+services:
+  searxng-mcp:
+    container_name: searxng-mcp
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - SSE_PORT=${SEARXNG_MCP_SSE_PORT?fail}
+    restart: unless-stopped
+    ports:
+      - "${SEARXNG_MCP_SSE_PORT}:${SEARXNG_MCP_SSE_PORT}"
+    volumes:
+      - searxng-mcp-data:/data
+    environment:
+      - SSE_PORT=${SEARXNG_MCP_SSE_PORT?fail}
+      - HOST_IP=0.0.0.0
+      - SEARXNG_URL=${SEARXNG_MCP_URL?fail}
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge
+
+volumes:
+  searxng-mcp-data:
