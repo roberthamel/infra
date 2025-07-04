@@ -1,6 +1,7 @@
 services:
   searxng-mcp:
     container_name: searxng-mcp
+    image: searxng-mcp:latest
     build:
       context: .
       dockerfile: Dockerfile
