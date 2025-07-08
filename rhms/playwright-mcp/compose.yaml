@@ -1,0 +1,26 @@
+services:
+  playwright-mcp:
+    container_name: playwright-mcp
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - SSE_PORT=${PLAYWRIGHT_MCP_SSE_PORT?fail}
+    restart: unless-stopped
+    ports:
+      - "${PLAYWRIGHT_MCP_SSE_PORT}:${PLAYWRIGHT_MCP_SSE_PORT}"
+    volumes:
+      - playwright-mcp-data:/data
+    environment:
+      - SSE_PORT=${PLAYWRIGHT_MCP_SSE_PORT?fail}
+      - HOST_IP=0.0.0.0
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge
+
+volumes:
+  playwright-mcp-data:
