@@ -1,0 +1,23 @@
+services:
+  glances:
+    image: nicolargo/glances:latest
+    restart: always
+    pid: "host"
+    privileged: true
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./glances.conf:/glances/conf/glances.conf"
+    environment:
+      - TZ=${TZ}
+      - GLANCES_OPT=-C /glances/conf/glances.conf -w
+    networks:
+      - mini
+    labels:
+      - tsdproxy.enable=true
+      - tsdproxy.name=glances-mini
+      - tsdproxy.container_port=61208
+      - com.centurylinklabs.watchtower.enable=true
+
+networks:
+  mini:
+    external: true
