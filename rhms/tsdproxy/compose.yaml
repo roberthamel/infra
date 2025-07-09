@@ -12,5 +12,7 @@ services:
     restart: always
     ports:
       - "8080/tcp"
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 volumes:
   tsdproxy_data:
