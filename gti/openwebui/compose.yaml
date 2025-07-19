@@ -25,6 +25,15 @@ services:
       - CODE_INTERPRETER_JUPYTER_TOKEN=${CODE_INTERPRETER_JUPYTER_TOKEN?fail}
       - CODE_INTERPRETER_JUPYTER_TIMEOUT=${CODE_INTERPRETER_JUPYTER_TIMEOUT?fail}
 
+  webui-pipelines:
+    container_name: webui-pipelines
+    image: ghcr.io/open-webui/pipelines:main
+    restart: unless-stopped
+    networks:
+      - webui
+    volumes:
+      - pipelines_data:/app/pipelines
+
   webui-searxng-redis:
     container_name: webui-searxng-redis
     image: docker.io/valkey/valkey:8-alpine
@@ -94,6 +103,7 @@ volumes:
   open-webui-data:
   valkey-data2:
   jupyter_data:
+  pipelines_data:
 
 networks:
   gti:
