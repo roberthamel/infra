@@ -12,6 +12,5 @@ gti/searxng/config/settings.yml filter=git-crypt diff=git-crypt
 rhms/dify/.env* filter=git-crypt diff=git-crypt
 rhms/n8n/.env* filter=git-crypt diff=git-crypt
 gti/glance/config/home.yml filter=git-crypt diff=git-crypt
-gti/komodo/compose.env filter=git-crypt diff=git-crypt
-gti/supabase/.env* filter=git-crypt diff=git-crypt
+next/supabase/.env* filter=git-crypt diff=git-crypt
 mini/immich/config/Settings.json filter=git-crypt diff=git-crypt

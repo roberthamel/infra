@@ -24,6 +24,15 @@ services:
       - CODE_INTERPRETER_JUPYTER_AUTH=${CODE_INTERPRETER_JUPYTER_AUTH?fail}
       - CODE_INTERPRETER_JUPYTER_TOKEN=${CODE_INTERPRETER_JUPYTER_TOKEN?fail}
       - CODE_INTERPRETER_JUPYTER_TIMEOUT=${CODE_INTERPRETER_JUPYTER_TIMEOUT?fail}
+      - WEB_LOADER_ENGINE=playwright
+      - PLAYWRIGHT_WS_URL=ws://playwright:3000
+
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.49.1-noble # Version must match requirements.txt
+    container_name: playwright
+    command: npx -y playwright@1.49.1 run-server --port 3000 --host 0.0.0.0
+    networks:
+      - webui
 
   webui-pipelines:
     container_name: webui-pipelines

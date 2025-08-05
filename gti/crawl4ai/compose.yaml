@@ -7,6 +7,7 @@ services:
       - /dev/shm:/dev/shm
     ports:
       - "11235:11235"
+      - "11234:11234"
     user: "appuser"
     deploy:
       resources:
