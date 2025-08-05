@@ -3,24 +3,25 @@ services:
     image: ghcr.io/thomiceli/opengist:1
     container_name: opengist
     restart: always
-    privileged: true
     ports:
       - "6157:6157"
     volumes:
-      - type: bind
-        source: $SERVER_DATA_LOCATION/opengist
-        target: /opengist
-        consistency: cached
+      - "${SERVER_DATA_LOCATION?fail}/opengist:/opengist"
+      # - type: bind
+      #   source: $SERVER_DATA_LOCATION/opengist
+      #   target: /opengist
+      #   consistency: cached
     environment:
       - OG_SSH_GIT_ENABLED=false
-      - OG_EXTERNAL_URL=${OPENGIST_EXTERNAL_URL:-?fail}
+      - OG_EXTERNAL_URL=http://mini:6157
+      # - OG_EXTERNAL_URL=${OPENGIST_EXTERNAL_URL:-?fail}
     networks:
       - mini
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://opengist:6157/healthcheck"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://opengist:6157/healthcheck"]
+    #   interval: 1m30s
+    #   timeout: 10s
+    #   retries: 3
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
 networks:

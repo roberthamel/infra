@@ -23,6 +23,9 @@ services:
       - .env
     ports:
       - '2283:2283'
+    networks:
+      - mini
+      - immich
     depends_on:
       - redis
       - database
@@ -42,6 +45,8 @@ services:
     #   service: cpu # set to one of [armnn, cuda, openvino, openvino-wsl] for accelerated inference - use the `-wsl` version for WSL2 where applicable
     volumes:
       - model-cache:/cache
+    networks:
+      - immich
     env_file:
       - .env
     restart: always
@@ -56,6 +61,8 @@ services:
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
+    networks:
+      - immich
 
   database:
     container_name: immich_postgres
@@ -65,6 +72,8 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_DB: ${DB_DATABASE_NAME}
       POSTGRES_INITDB_ARGS: '--data-checksums'
+    networks:
+      - immich
     volumes:
       # Do not edit the next line. If you want to change the database storage location on your system, edit the value of DB_DATA_LOCATION in the .env file
       - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
@@ -93,6 +102,8 @@ services:
     container_name: immichframe
     image: ghcr.io/immichframe/immichframe:latest
     restart: on-failure
+    networks:
+      - immich
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
       - "tsdproxy.enable=true"
@@ -105,3 +116,9 @@ services:
       TZ: "America/New_York"
 volumes:
   model-cache:
+
+networks:
+  mini:
+    external: true
+  immich:
+    external: false
